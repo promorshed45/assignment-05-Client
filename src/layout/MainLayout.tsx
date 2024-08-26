@@ -1,6 +1,6 @@
-import FeaturedServices from "@/components/ui/Home/FeaturedServices";
-import HeroSection from "@/components/ui/Home/HeroSection";
-import ReviewSection from "@/components/ui/Home/Review";
+import FeaturedServices from "@/components/Home/FeaturedServices";
+import HeroSection from "@/components/Home/HeroSection";
+import ReviewSection from "@/components/Home/Review";
 
 
 

@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { GoStar, GoStarFill } from "react-icons/go";
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
-import { Button } from "../button";
-import { Label } from "../label";
-import { Textarea } from "../textarea";
 import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 
-const RatingBar = ({ rating, count, total }) => (
+type StarRatingProps = {
+  rating: number;
+  onClick: (rating: number) => void;
+};
+
+type ReviewProps = {
+  name: string;
+  rating: number;
+  date: string;
+  comment: string;
+};
+
+type RatingBarProps = {
+  rating: number;
+  count: number;
+  total: number;
+};
+
+const RatingBar = ({ rating, count, total } : RatingBarProps) => (
   <div className="flex items-center gap-3">
     <div className="w-10 text-lg font-semibold text-gray-800">{rating}.0</div>
     <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -19,7 +37,7 @@ const RatingBar = ({ rating, count, total }) => (
   </div>
 );
 
-const StarRating = ({ rating, onClick }) => {
+const StarRating = ({ rating, onClick }: StarRatingProps) => {
   const [hover, setHover] = useState(null);
 
   return (
@@ -43,7 +61,7 @@ const StarRating = ({ rating, onClick }) => {
   );
 };
 
-const Review = ({ name, rating, date, comment }) => (
+const Review = ({ name, rating, date, comment } : ReviewProps ) => (
   <div className="py-6">
     <div className="flex items-center gap-4 mb-2">
       <Avatar className="w-12 h-12 shadow-lg">
@@ -79,7 +97,7 @@ export default function Component() {
     { rating: 1, count: 9 },
   ];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const toastID = toast.loading("Please wait...");
@@ -97,13 +115,13 @@ export default function Component() {
       toast.success("Review submitted!", {
         description: "Thanks for your feedback",
       });
-    e.target.reset();
-      // form.reset();
+      form.reset();
     } catch {
       toast.error("something went wrong while making this request");
     }
   };
 
+  
   return (
     <section className="py-12 px-5 sm:px-10 bg-yellow-50">
       <div className="container mx-auto px-6">

@@ -1,6 +1,6 @@
 
 
-const ServicesSection = () => {
+const FeaturedServices = () => {
   return (
     <section className="py-12 px-5 sm:px-10 bg-yellow-50">
       <div className="container mx-auto px-6">
@@ -29,7 +29,7 @@ const ServicesSection = () => {
   );
 };
 
-export default ServicesSection;
+export default FeaturedServices;
 
 const services = [
     {
