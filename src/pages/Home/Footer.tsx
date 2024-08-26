@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "../../../src/assets/logo.jpg";
+import logo from "../../../src/assets/logo.svg";
 
 const Footer = () => {
   return (
@@ -10,13 +10,10 @@ const Footer = () => {
           <div className="inline-flex items-center space-x-2 pb-10">
             <div className="">
               <Link to="/">
-                <img alt="Elite Car Wash" className="h-14 w-20" src={logo} />
+                <img alt="Elite Car Wash" className="h-14 w-32" src={logo} />
               </Link>
             </div>
-            <h1 className="font-bold text-xl">
-              {" "}
-              Elite Car Wash <span className="text-red-500"> & Service </span>{" "}
-            </h1>
+            
           </div>
           <h1 className="max-w-sm text-2xl font-semibold">
             Subscribe to our Newsletter

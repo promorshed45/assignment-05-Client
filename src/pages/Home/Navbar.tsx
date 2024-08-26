@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LogIn, Menu, X } from "lucide-react";
-import logo from "../../../src/assets/logo.jpg";
+import logo from "../../../src/assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
@@ -11,11 +11,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="md:container sticky w-full h-20 z-20 top-0 start-0 border-b bg-black">
+    <div className="md:container sticky w-full  z-20 top-0 start-0 bg-black">
       <div className="mx-auto flex  items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <div className="flex items-center">
-            <div className="h-14 w-26 bg-green-600">
+            <div className="h-14 w-26">
               <Link to="/">
                 <img
                   alt="Elite Car Wash"
