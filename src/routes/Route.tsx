@@ -2,7 +2,7 @@ import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
 import PageNotFound from "@/pages/PageNotFound";
-import ServicesSection from "@/components/Home/ServicesSection";
+import ServicesSection from "@/components/page/Services/ServicesSection";
 
 const router = createBrowserRouter([
   {

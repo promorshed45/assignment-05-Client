@@ -1,6 +1,9 @@
 import { TService, TServiceCardProps } from '@/type';
 import { motion } from 'framer-motion';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
+import Category from './Category';
+import SearchBar from './SearchBar';
+import SortingService from './SortingService';
 
 const services: TService[] = [
   { name: 'Basic Wash', description: 'Exterior wash with a thorough rinse.', price: '15', duration: '20' },
@@ -33,6 +36,10 @@ const ServiceCard = ({ name, description, price, duration }: TServiceCardProps) 
 
 const ServicesSection = () => (
   <section className="py-12 bg-gradient-to-r from-gray-100 to-gray-200 text-center">
+    <div className="flex justify-between items-center px-5 sm:px-10 pb-5 sm:pb-8">
+        <SearchBar />
+        <SortingService/>
+      </div>
     <h2 className="text-3xl font-bold text-gray-800 mb-10">Our Car Wash Services Plan</h2>
     <div className="flex flex-wrap justify-center gap-6">
       {services.map((service, index) => (
