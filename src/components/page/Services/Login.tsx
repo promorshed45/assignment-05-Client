@@ -1,11 +1,36 @@
 import { ArrowRight } from "lucide-react";
 import logo from "../../../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { FieldValues, useForm } from "react-hook-form";
+import { useLoginUserMutation } from "@/redux/features/authApi";
 
 const Login = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [loginUser] = useLoginUserMutation();
+    const navigate = useNavigate();
+
+    const onSubmit = async (data: FieldValues) => {
+        console.log(data);
+        const toastId = toast.loading("Please wait...");
+        try {
+            const result = await loginUser(data).unwrap();
+            console.log('Login result:', result);
+            toast.success('Login successful!', {
+                id: toastId,
+                duration: 1000,
+            });
+            navigate('/dashboard');
+        } catch (error) {
+            toast.error('Login failed. Please try again.', {
+                id: toastId
+            });
+        }
+    };
+
     return (
         <section>
-            <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-10 lg:px-8 ">
+            <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-10 lg:px-8">
                 <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
                     <div className="flex justify-center">
                         <Link to="/">
@@ -19,7 +44,7 @@ const Login = () => {
                     <h2 className="text-center text-3xl font-bold leading-tight text-black">
                         Sign in to your account
                     </h2>
-                    <p className="mt-2 text-center text-sm text-gray-600 ">
+                    <p className="mt-2 text-center text-sm text-gray-600">
                         Don&apos;t have an account?{' '}
                         <Link
                             to='/register'
@@ -28,43 +53,49 @@ const Login = () => {
                             Create a new account
                         </Link>
                     </p>
-                    <form action="#" method="POST" className="mt-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
                         <div className="space-y-5">
                             <div>
-                                <label htmlFor="" className="text-base font-medium text-gray-900">
-                                    {' '}
-                                    Email address{' '}
+                                <label htmlFor="email" className="text-base font-medium text-gray-900">
+                                    Email
                                 </label>
                                 <div className="mt-2">
                                     <input
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="email"
                                         placeholder="Email"
-                                    ></input>
+                                        id="email"
+                                        {...register('email', { 
+                                            required: 'Email is required', 
+                                            pattern: { 
+                                                value: /^\S+@\S+$/i, 
+                                                message: 'Enter a valid email address' 
+                                            } 
+                                        })}
+                                    />
+                                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                 </div>
                             </div>
+
                             <div>
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="" className="text-base font-medium text-gray-900">
-                                        {' '}
-                                        Password{' '}
-                                    </label>
-                                    <a href="#" title="" className="text-sm font-semibold text-black hover:underline">
-                                        {' '}
-                                        Forgot password?{' '}
-                                    </a>
-                                </div>
+                                <label htmlFor="password" className="text-base font-medium text-gray-900">
+                                    Password
+                                </label>
                                 <div className="mt-2">
                                     <input
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="password"
                                         placeholder="Password"
-                                    ></input>
+                                        id="password"
+                                        {...register('password', { required: 'Password is required' })}
+                                    />
+                                    {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                                 </div>
                             </div>
+
                             <div>
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                 >
                                     Login <ArrowRight className="ml-2" size={16} />

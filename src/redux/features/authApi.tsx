@@ -12,10 +12,19 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    loginUser: builder.mutation({
+        query: (User) => ({
+          url: "/auth/login",
+          method: "POST",
+          body: User,
+        }),
+        invalidatesTags: ["user"],
+      }),
  
     
   }),
 });
 export const {
   useRegisterUserMutation,
+  useLoginUserMutation,
 } = userApi;

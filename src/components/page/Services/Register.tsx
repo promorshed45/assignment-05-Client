@@ -1,21 +1,25 @@
 import { ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { FieldValues, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useRegisterUserMutation } from '@/redux/features/authApi';
+import { Textarea } from '@/components/ui/textarea';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [createUser] = useRegisterUserMutation();
 
-    const onSubmit = async (data) => {
-        console.log(data);
+
+    const onSubmit = async (data: FieldValues) => {
+        const toastId = toast.loading("Please wait...");
         try {
-            await dispatch(useRegisterUserMutation(data)).unwrap();
-            toast.success('Registration successful!');
-            navigate('/dashboard'); // Redirect after successful registration
+            await createUser(data).unwrap();
+            toast.success('Registration successful!', {
+                id: toastId,
+                duration: 1000,
+              });
+            navigate('/login');
         } catch (error) {
             toast.error('Registration failed. Please try again.');
         }
@@ -56,7 +60,7 @@ const Register = () => {
                             </div>
                             <div>
                                 <label htmlFor="email" className="text-base font-medium text-gray-900">
-                                    Email address
+                                    Email
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -75,6 +79,50 @@ const Register = () => {
                                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                 </div>
                             </div>
+
+                            <div>
+                                <label htmlFor="phone" className="text-base font-medium text-gray-900">
+                                    Phone Number
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                        type="number"
+                                        placeholder="Phone number"
+                                        id="phone"
+                                        {...register('phone', {
+                                            required: 'Phone number is required',
+                                            pattern: {
+                                                value: /^\+?[1-9]\d{1,14}$/i, // Example pattern for international phone numbers
+                                                message: 'Enter a valid phone number'
+                                            }
+                                        })}
+                                    />
+                                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="address" className="text-base font-medium text-gray-900">
+                                    Address
+                                </label>
+                                <div className="mt-2">
+                                    <Textarea
+                                        className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                        placeholder="Address"
+                                        id="address"
+                                        {...register('address', {
+                                            required: 'Address is required',
+                                            minLength: {
+                                                value: 5,
+                                                message: 'Address must be at least 5 characters long'
+                                            }
+                                        })}
+                                    />
+                                    {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
+                                </div>
+                            </div>
+
                             <div>
                                 <label htmlFor="password" className="text-base font-medium text-gray-900">
                                     Password

@@ -5,6 +5,7 @@ import PageNotFound from "@/pages/PageNotFound";
 import ServicesSection from "@/components/page/Services/ServicesSection";
 import Login from "@/components/page/Services/Login";
 import Register from "@/components/page/Services/Register";
+import DashboardLayout from "@/components/Dashboard/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout/>,
+    children: [
+      {
+        path: '',
+        element: <></>
+      }
+    ]
+  }
 ]);
 
 export default router;
