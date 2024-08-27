@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LogIn, Menu, X } from "lucide-react";
 import logo from "../../../src/assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,12 +43,15 @@ const Navbar = () => {
         </div>
 
         <div className="hidden space-x-2 lg:block">
-          <button
-            type="button"
-            className="rounded-md border border-gray-700 bg-gray-100 px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          <Link
+            to='/login'
           >
-            <LogIn className="size-5 text-gray-700" />
-          </button>
+            <Button
+              className="bg-yellow-500 outline-none hover:bg-gray-100"
+            >
+              <LogIn className="size-5 text-black" />
+            </Button>
+          </Link>
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
@@ -91,12 +95,13 @@ const Navbar = () => {
                   </nav>
                 </div>
                 <div className="ml-4 mt-2">
-                  <button
-                    type="button"
-                    className="rounded-md border border-gray-700 bg-gray-100 px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                  >
-                    <LogIn className="size-5 text-gray-700" />
-                  </button>
+                  <Link to="/login">
+                    <button
+                      type="button"
+                      className="rounded-md border border-gray-700 bg-gray-100 px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
+                      <LogIn className="size-5 text-gray-700" />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
