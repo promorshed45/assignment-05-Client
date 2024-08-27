@@ -11,10 +11,11 @@ const router = createBrowserRouter([
     errorElement: <PageNotFound/>,
     children: [
       {
-        path: "/",
+        index: true,
         element: <MainLayout />
       },
       {
+        index: true,
         path: "/service",
         element: <ServicesSection/>
       },
