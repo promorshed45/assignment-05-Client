@@ -3,7 +3,7 @@ import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FieldValues, useForm } from "react-hook-form";
-import { useLoginUserMutation } from "@/redux/features/authApi";
+import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();

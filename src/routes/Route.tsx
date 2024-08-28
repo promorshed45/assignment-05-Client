@@ -6,6 +6,7 @@ import ServicesSection from "@/components/page/Services/ServicesSection";
 import Login from "@/components/page/Services/Login";
 import Register from "@/components/page/Services/Register";
 import DashboardLayout from "@/components/Dashboard/DashboardLayout";
+import ServiceManage from "@/components/Dashboard/ServiceManagement/ServiceManage";
 
 const router = createBrowserRouter([
   {
@@ -37,15 +38,20 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/dashboard',
-    element: <DashboardLayout/>,
+    path: 'dashboard',
+    element: <DashboardLayout />,
     children: [
       {
-        path: '',
+        path: 'service-management', 
+        element: <ServiceManage />
+      },
+      {
+        path: 'service-management', 
         element: <></>
       }
     ]
   }
+  
 ]);
 
 export default router;

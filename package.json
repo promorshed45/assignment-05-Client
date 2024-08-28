@@ -22,10 +22,12 @@
     "@reduxjs/toolkit": "^2.2.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "embla-carousel-autoplay": "^8.1.6",
     "embla-carousel-class-names": "^8.1.6",
     "embla-carousel-react": "^8.1.6",
     "framer-motion": "^11.3.30",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.402.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -41,6 +43,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

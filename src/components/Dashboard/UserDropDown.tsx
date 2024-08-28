@@ -15,11 +15,10 @@ const UserDropDown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        
-          <Avatar className="size-10 shadow-lg">
-            <AvatarImage
+          <Avatar className="size-10 bg-slate-700 shadow-lg">
+            {/* <AvatarImage
               src={`https://api.dicebear.com/6.x/initials/svg?seed=${name}`}
-            />
+            /> */}
             <AvatarFallback>{name[0]}</AvatarFallback>
           </Avatar>
       </DropdownMenuTrigger>
