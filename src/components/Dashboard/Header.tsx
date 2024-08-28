@@ -1,26 +1,27 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAppSelector } from "@/redux/hook";
-// import ThemeChanger from "./ThemeChanger";
-
+import UserDropDown from './UserDropDown';
 
 const Header = () => {
-  const { user } = useAppSelector((state) => state.auth);
+
+
   return (
-    <div className="w-full flex items-center justify-between px-[20px]  py-[10px] border-b-[1px] border-muted shrink-0">
-      <img src="/images/logo.png" className="w-[80px]" />
-      <div className="flex items-center justify-end gap-[8px]">
-        {/* <ThemeChanger /> */}
-        <Avatar>
-          <AvatarImage src={user?.image || ""} alt="user avatar" />
-          <AvatarFallback>
-            <p className="text-muted-foreground uppercase">
-              {user?.firstName?.slice(0, 1)}
-              {user?.lastName?.slice(0, 1)}
-            </p>
-          </AvatarFallback>
-        </Avatar>
+    <nav className="top-0 w-full bg-[#111827] border-b border-gray-800 dark:bg-gray-800 dark:border-gray-700">
+      <div className="px-3 py-3 lg:px-5 lg:pl-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center justify-start rtl:justify-end">
+              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">
+                Welcome Back, 
+              </span>
+          </div>
+          <div className="flex items-center">
+            <div className="flex items-center ms-3">
+              <div>
+                <UserDropDown/>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

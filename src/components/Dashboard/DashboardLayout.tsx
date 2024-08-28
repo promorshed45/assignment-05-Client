@@ -1,22 +1,19 @@
 
 import { Outlet } from "react-router-dom";
-import DashboardHeader from "./Header";
 import Sidebar from "./Sidebar";
-import { ThemeProvider } from "../ui/ThemeProvider";
+import Header from "./Header";
 
 const DashboardLayout = () => {
   return (
-    <ThemeProvider defaultTheme="light">
-      <div className="w-full h-screen flex items-start justify-start pb-[30px]">
+    <div className="w-full h-screen flex items-start justify-start pb-[30px]">
         <Sidebar />
-        <div className="w-full h-full flex-col flex">
-          <DashboardHeader />
-          <div className="h-full overflow-auto smoothBar">
+        <div className="w-full h-full flex-col flex bg-[#111827] px-3 ">
+          <Header />
+          <div className="h-full overflow-auto smoothBar ">
             <Outlet />
           </div>
         </div>
       </div>
-    </ThemeProvider>
   );
 };
 
