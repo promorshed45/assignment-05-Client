@@ -4,37 +4,42 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useRegisterUserMutation } from '@/redux/features/auth/authApi';
 import { Textarea } from '@/components/ui/textarea';
-import { useAppDispatch } from '@/redux/hook';
-import { setToken, setUser } from '@/redux/features/auth/authSlice';
-import Cookies from "js-cookie";
+import { setUser } from '@/redux/features/userSlice';
+import { useDispatch } from 'react-redux';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const [createUser] = useRegisterUserMutation();
-    const dispatch = useAppDispatch();
+    const [registerUser] = useRegisterUserMutation();
+    const dispatch = useDispatch();
 
 
-    const onSubmit = async (data: FieldValues) => {
+    const onSubmit = async (userData: FieldValues) => {
         const toastId = toast.loading("Please wait...");
         try {
-            const response = await createUser(data).unwrap();
-            const { user, accessToken, refreshToken } = response;
+            const data = await registerUser(userData).unwrap();
+            console.log("API Response:", data);
 
+            const user = data.data;
+
+            if (!user) {
+                throw new Error('Unexpected response format');
+            }
             dispatch(setUser(user));
-            Cookies.set("refreshToken", refreshToken, { expires: 30 });
-            dispatch(setToken(accessToken));
+            toast.success('Registration successful!');
 
-            toast.success('Registration successful!', {
-                id: toastId,
-                duration: 1000,
-            });
-
-            navigate('/login');
-        } catch (error: any) {
-            toast.error(`Registration failed: ${error.message || 'Please try again.'}`);
+            // navigate('/login');
+        } catch (err) {
+            console.error("Error:", err);
+            toast.error(err.data?.message || "Please try again.");
+        } finally {
+            toast.dismiss(toastId);
         }
     };
+
+    
+    
+    
 
     return (
         <section>

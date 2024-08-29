@@ -2,29 +2,62 @@ import { ArrowRight } from "lucide-react";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useLoginUserMutation } from "@/redux/features/auth/authApi";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "@/redux/features/userSlice";
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, } = useForm();
     const [loginUser] = useLoginUserMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const onSubmit = async (data: FieldValues) => {
-        console.log(data);
+    const redirect = Cookies.get("redirect");
+
+    const initialValues = {
+        email: "",
+        password: "",
+    };
+    type TFormValues = typeof initialValues;
+
+    const onSubmit = async (userData: TFormValues) => {
         const toastId = toast.loading("Please wait...");
         try {
-            const result = await loginUser(data).unwrap();
-            console.log('Login result:', result);
-            toast.success('Login successful!', {
-                id: toastId,
-                duration: 1000,
-            });
-            navigate('/dashboard');
-        } catch (error) {
-            toast.error('Login failed. Please try again.', {
-                id: toastId
-            });
+            const data = await loginUser(userData).unwrap();
+            console.log("Full API Response:", data);
+
+            const { token } = data;
+            const user = data.data;
+
+            if (success) {
+                if (user) {
+                    dispatch(setUser(user));
+                } else {
+                    console.warn("User data is missing");
+                }
+                Cookies.set("refreshToken", token, { expires: 30 });
+                dispatch(setToken(token));
+
+                toast.success("Successfully logged in", {
+                    description: "Welcome back!",
+                });
+
+                if (redirect) {
+                    Cookies.remove("redirect");
+                    navigate(redirect);
+                } else {
+                    navigate("/dashboard");
+                }
+            } else {
+                toast.error(message || "Login failed");
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            toast.error(err.data?.message || "Unknown error occurred");
+        } finally {
+            toast.dismiss(toastId);
         }
     };
 
@@ -34,20 +67,16 @@ const Login = () => {
                 <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
                     <div className="flex justify-center">
                         <Link to="/">
-                            <img
-                                alt="Elite Car Wash"
-                                className="w-32 h-20"
-                                src={logo}
-                            />
+                            <img alt="Elite Car Wash" className="w-32 h-20" src={logo} />
                         </Link>
                     </div>
                     <h2 className="text-center text-3xl font-bold leading-tight text-black">
                         Sign in to your account
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Don&apos;t have an account?{' '}
+                        Don&apos;t have an account?{" "}
                         <Link
-                            to='/register'
+                            to="/register"
                             className="font-semibold text-rose-500 transition-all duration-200 hover:underline"
                         >
                             Create a new account
@@ -56,7 +85,10 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
                         <div className="space-y-5">
                             <div>
-                                <label htmlFor="email" className="text-base font-medium text-gray-900">
+                                <label
+                                    htmlFor="email"
+                                    className="text-base font-medium text-gray-900"
+                                >
                                     Email
                                 </label>
                                 <div className="mt-2">
@@ -65,20 +97,27 @@ const Login = () => {
                                         type="email"
                                         placeholder="Email"
                                         id="email"
-                                        {...register('email', { 
-                                            required: 'Email is required', 
-                                            pattern: { 
-                                                value: /^\S+@\S+$/i, 
-                                                message: 'Enter a valid email address' 
-                                            } 
+                                        {...register("email", {
+                                            required: "Email is required",
+                                            pattern: {
+                                                value: /^\S+@\S+$/i,
+                                                message: "Enter a valid email address",
+                                            },
                                         })}
                                     />
-                                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+                                    {errors.email && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.email.message}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="text-base font-medium text-gray-900">
+                                <label
+                                    htmlFor="password"
+                                    className="text-base font-medium text-gray-900"
+                                >
                                     Password
                                 </label>
                                 <div className="mt-2">
@@ -87,9 +126,15 @@ const Login = () => {
                                         type="password"
                                         placeholder="Password"
                                         id="password"
-                                        {...register('password', { required: 'Password is required' })}
+                                        {...register("password", {
+                                            required: "Password is required",
+                                        })}
                                     />
-                                    {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+                                    {errors.password && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.password.message}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 

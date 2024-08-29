@@ -5,18 +5,18 @@ const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Create User
     registerUser: builder.mutation({
-      query: (User) => ({
+      query: (post) => ({
         url: "/auth/signup",
         method: "POST",
-        body: User,
+        body: post,
       }),
       invalidatesTags: ["user"],
     }),
     loginUser: builder.mutation({
-        query: (User) => ({
+        query: (post: { email: string; password: string }) => ({
           url: "/auth/login",
           method: "POST",
-          body: User,
+          body: post,
         }),
         invalidatesTags: ["user"],
       }),
