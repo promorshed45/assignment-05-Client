@@ -16,7 +16,7 @@ const RatingBar: React.FC<RatingBarProps> = ({ rating, count, total }) => (
         style={{ width: `${(count / total) * 100}%` }}
       />
     </div>
-    <div className="w-24 text-sm text-gray-500">{Math.round(count)}K reviews</div>
+    <div className="w-24 text-sm text-gray-500">{Math.round(count)} reviews</div>
   </div>
 );
 
