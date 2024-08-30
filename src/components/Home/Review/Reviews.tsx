@@ -1,7 +1,5 @@
-import React from "react";
 import { useGetAllReviewsQuery } from '@/redux/features/auth/reviewApi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useAppSelector } from "@/redux/hook";
 import StarRating from "./StartRating";
 
 type Review = {
@@ -15,8 +13,6 @@ type Review = {
 const Reviews = () => {
   const { data, isError, isLoading } = useGetAllReviewsQuery("");
   
-  console.log('Redux data:', data?.userId?.name); 
-
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong. Please try again later.</p>;
 
@@ -26,11 +22,6 @@ const Reviews = () => {
         const { _id, userId, rating, feedback, createdAt } = review;
         const userName = userId?.name || 'Anonymous';
         const reviewName = userName.length < 0 ? userName : userId?.name;
-
-        console.log('reviewName', reviewName);
-
-        console.log('user name:', userName,);
-        console.log('reviewName', reviewName);
 
         return (
           <div key={_id} className="flex flex-col mb-10">

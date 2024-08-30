@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useGetAllReviewsQuery } from '@/redux/features/auth/reviewApi';
-import { useAppSelector } from "@/redux/hook";
 import StarRating from '../Home/Review/StartRating';
 
 type Review = {
@@ -13,10 +12,7 @@ type Review = {
 
 const AllReviews = () => {
   const { data, isError, isLoading } = useGetAllReviewsQuery("");
-  const { user } = useAppSelector((state) => state.user);
   
-  console.log('Redux user:', user.name); 
-
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong. Please try again later.</p>;
 
@@ -24,9 +20,9 @@ const AllReviews = () => {
     <div className='px-10 md:px-16 lg:px-20 py-5 md:py-10'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10'>
       {data?.data?.map((review: Review) => {
-        const { _id, userId, rating, feedback, createdAt } = review;
-        const userName = userId?.name || 'Anonymous'; 
-        const reviewName = userName.length < 0 ? userName : user?.name; 
+         const { _id, userId, rating, feedback, createdAt } = review;
+         const userName = userId?.name || 'Anonymous';
+         const reviewName = userName.length < 0 ? userName : userId?.name;
 
         return (
           <div key={_id} className="flex flex-col mb-10 shadow-md py-5 px-4 border-0 border-gray-50 rounded-md">

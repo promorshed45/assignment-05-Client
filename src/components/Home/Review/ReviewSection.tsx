@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../../ui/button";
 import { Label } from "../../ui/label";
@@ -7,9 +7,20 @@ import Reviews from "./Reviews";
 import { Link } from "react-router-dom";
 import StarRating from "./StartRating";
 import RatingBar from "./RattingBar";
+import { useCreateReviewMutation } from "@/redux/features/auth/reviewApi";
+import { useForm } from "react-hook-form";
+import { FieldValues } from 'react-hook-form';
+import { useAppSelector } from '@/redux/hook';
+
 
 const ReviewSection = () => {
   const [rating, setRating] = useState(0);
+  const [addRevies] = useCreateReviewMutation();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { user } = useAppSelector((state) => state.user);
+  const userId = user._id;
+
+
   const totalReviews = 35.8;
   const ratings = [
     { rating: 5, count: 14 },
@@ -19,31 +30,30 @@ const ReviewSection = () => {
     { rating: 1, count: 9 },
   ];
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    const toastID = toast.loading("Please wait...");
+  const onSubmit = async (ReviewsData: FieldValues) => {
+    console.log('ReviewsData ui', ReviewsData);
+    const toastId = toast.loading("Please wait...");
     try {
-      const form = e.currentTarget;
-      const comment = form.feedback.value as string;
+      const data = await addRevies({...ReviewsData, userId}).unwrap();
+      console.log("API Response:", data);
 
-      if (!comment || comment.length < 15) {
-        return toast.error("Review should be at least 15 characters");
-      }
-
-      // Replace with actual review submission logic
-      await create({ rating, comment });
-
-      toast.dismiss(toastID);
+      toast.dismiss(toastId);
       toast.success("Review submitted!", {
         description: "Thanks for your feedback",
       });
-      form.reset();
-      setRating(0); // Reset rating after submission
-    } catch {
+
+      // reset(); 
+      setRating(0); 
+    } catch (error) {
+      console.error("Error while submitting review:", error); 
+      toast.dismiss(toastId); 
       toast.error("Something went wrong while making this request");
     }
   };
+
+
+
 
   return (
     <section className="py-12 px-5 sm:px-10 bg-yellow-50">
@@ -81,7 +91,7 @@ const ReviewSection = () => {
             <h3 className="text-2xl font-semibold mb-6 text-gray-900">
               Write a Review
             </h3>
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+            <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <Label
                   htmlFor="feedback"
@@ -93,8 +103,11 @@ const ReviewSection = () => {
                   placeholder="Share your thoughts and experiences..."
                   className="w-full rounded-lg border border-gray-300 focus:border-blue-500"
                   rows={3}
-                  name="feedback"
+                  {...register("feedback", { required: "Feedback is required" })}
                 />
+                {errors.feedback && (
+                  <p className="text-red-500 text-sm mt-1">{errors.feedback.message}</p>
+                )}
               </div>
               <div className="mb-6">
                 <Label
@@ -103,7 +116,10 @@ const ReviewSection = () => {
                 >
                   Rating:
                 </Label>
-                <StarRating rating={rating} onClick={setRating} />
+                <StarRating
+                  rating={rating}
+                  onClick={(value) => setValue("rating", value)}
+                />
               </div>
               <Button
                 type="submit"
