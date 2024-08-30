@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRight } from "lucide-react";
-import logo from "../../../assets/logo.svg";
+import logo from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useLoginUserMutation } from "@/redux/features/auth/authApi";
-import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "@/redux/features/userSlice";
 
@@ -14,7 +14,6 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const redirect = Cookies.get("redirect");
 
     const initialValues = {
         email: "",
@@ -23,7 +22,7 @@ const Login = () => {
     type TFormValues = typeof initialValues;
 
     const onSubmit = async (userData: TFormValues) => {
-        const toastId = toast.loading("Please wait...");
+
         try {
             const data = await loginUser(userData).unwrap();
             console.log("Full API Response:", data);
@@ -31,33 +30,16 @@ const Login = () => {
             const { token } = data;
             const user = data.data;
 
-            if (success) {
-                if (user) {
-                    dispatch(setUser(user));
-                } else {
-                    console.warn("User data is missing");
-                }
-                Cookies.set("refreshToken", token, { expires: 30 });
-                dispatch(setToken(token));
-
-                toast.success("Successfully logged in", {
-                    description: "Welcome back!",
-                });
-
-                if (redirect) {
-                    Cookies.remove("redirect");
-                    navigate(redirect);
-                } else {
-                    navigate("/dashboard");
-                }
-            } else {
-                toast.error(message || "Login failed");
-            }
-        } catch (err) {
+            console.log("token", token, "user:", user);
+            dispatch(setToken(token));
+            dispatch(setUser(user));
+            toast.success("Successfully logged in", {
+                description: "Welcome back!",
+            });
+            navigate("/dashboard");
+        } catch (err: any) {
             console.error("Error:", err);
             toast.error(err.data?.message || "Unknown error occurred");
-        } finally {
-            toast.dismiss(toastId);
         }
     };
 

@@ -30,6 +30,8 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.402.0",
     "react": "^18.3.1",
+    "react-calendar": "^5.0.0",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
     "react-icons": "^5.3.0",

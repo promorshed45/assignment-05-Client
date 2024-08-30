@@ -35,7 +35,7 @@ import EditService from "./EditService";
 import DeleteService from "./DeleteService";
 import { Badge } from "@/components/ui/badge";
 import { trimText } from "@/utilis/trimText";
-import { useGetServicesQuery } from "@/redux/features/service/serviceApi";
+import { useGetServicesQuery } from "@/redux/api/ServiceApi";
 
 const ServiceManage = () => {
   const [limit, setLimit] = useState(10);

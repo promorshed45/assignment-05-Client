@@ -3,10 +3,12 @@ import MainLayout from "@/layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
 import PageNotFound from "@/pages/PageNotFound";
 import ServicesSection from "@/components/page/Services/ServicesSection";
-import Login from "@/components/page/Services/Login";
-import Register from "@/components/page/Services/Register";
+import Login from "@/components/page/Login";
+import Register from "@/components/page/Register";
 import DashboardLayout from "@/components/Dashboard/DashboardLayout";
 import ServiceManage from "@/components/Dashboard/ServiceManagement/ServiceManage";
+import ServiceDetails from "@/components/Home/ServiceDetails";
+import AllReviews from "@/components/page/AllReviews";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,11 @@ const router = createBrowserRouter([
         element: <ServicesSection/>
       },
       {
+        index: true,
+        path: "/services/:id",
+        element: <ServiceDetails/>
+      },
+      {
         path: "/booking",
         element: <></>
       },
@@ -34,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register/>
+      },
+      {
+        path: "/allreviews",
+        element: <AllReviews/>
       },
     ],
   },

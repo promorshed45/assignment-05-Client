@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -28,8 +29,8 @@ const Register = () => {
             dispatch(setUser(user));
             toast.success('Registration successful!');
 
-            // navigate('/login');
-        } catch (err) {
+            navigate('/login');
+        } catch (err: any) {
             console.error("Error:", err);
             toast.error(err.data?.message || "Please try again.");
         } finally {

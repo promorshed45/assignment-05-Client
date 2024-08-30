@@ -1,6 +1,5 @@
 import { LogOut, Settings, User } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,16 +10,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useAppSelector } from "@/redux/hook";
+
 const UserDropDown = () => {
+  const { user } = useAppSelector((state) => state.user);
+  console.log(user);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-          <Avatar className="size-10 bg-slate-700 shadow-lg">
-            {/* <AvatarImage
-              src={`https://api.dicebear.com/6.x/initials/svg?seed=${name}`}
-            /> */}
-            <AvatarFallback>{name[0]}</AvatarFallback>
-          </Avatar>
+        <Avatar className="w-12 h-12 shadow-lg">
+          {user?.image ? (
+            <AvatarImage src={user?.image} />
+          ) : (
+            <AvatarFallback className="">{user?.name[0]}</AvatarFallback>
+          )}
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-44 mr-3">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

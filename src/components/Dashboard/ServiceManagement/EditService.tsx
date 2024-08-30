@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUpdateServiceMutation } from "@/redux/features/service/serviceApi";
 import { IService } from "@/type/service";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm, Controller } from "react-hook-form";
 import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
+import { useUpdateServiceMutation } from '@/redux/api/ServiceApi';
 
 type TValues = {
   name: string;

@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
 import searchReducer from "./features/searchSlice";
-// import signUpReducer from "./features/signupSlice";
-// import loginReducer from "./features/loginSlice";
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 import userReducer from "./features/userSlice";
-// import slotReducer from './features/slotSlice';
+import slotReducer from './features/slot/slotSlice';
 
 const persistUserConfig = {
   key: "user",
@@ -19,8 +17,6 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     search: searchReducer,
-    signUp: signUpReducer,
-    login: loginReducer,
     user: persistedUserReducer,
     slot: slotReducer,
   },

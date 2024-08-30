@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useCreateServiceMutation } from "@/redux/features/service/serviceApi";
+import { useAddServiceMutation } from "@/redux/api/ServiceApi";
 
 type TFormValues = {
   name: string;
@@ -25,7 +25,7 @@ type TFormValues = {
 };
 
 const AddService = () => {
-  const [createService] = useCreateServiceMutation(undefined);
+  const [createService] = useAddServiceMutation(undefined);
 
   const {
     control,

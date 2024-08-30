@@ -13,7 +13,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useDeleteServiceMutation } from "@/redux/features/service/serviceApi";
+import { useDeleteServiceMutation } from "@/redux/api/ServiceApi";
 
 const DeleteService = ({ id }: { id: string }) => {
   const [deletService] = useDeleteServiceMutation();
