@@ -14,35 +14,35 @@ const AdminMenu = () => {
                             href="#"
                         >
                             <BarChart className="h-5 w-5 text-gradient-to-r from-rose-400 to-red-500" aria-hidden="true" />
-                            <span className="mx-2 text-sm font-medium">Dashboard</span>
+                            <span className="mx-2 pl-3 text-sm font-medium">Dashboard</span>
                         </a>
                         <Link
                             to='/dashboard/service-management'
                             className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
                         >
                             <FaServicestack className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />
-                            <span className="mx-2 text-sm font-medium">Service Management</span>
+                            <span className="mx-2 pl-3 text-sm font-medium">Service </span>
                         </Link>
                         <Link
                             to='/dashboard/slots-management'
                             className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
                         >
                             <FaCalendarAlt className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />
-                            <span className="mx-2 text-sm font-medium">Slot Management</span>
+                            <span className="mx-2 pl-3 text-sm font-medium">Slot </span>
                         </Link>
                         <Link
                             to='/dashboard/users-management'
                             className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
                         >
                             <FaUser className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />
-                            <span className="mx-2 text-sm font-medium">User Management</span>
+                            <span className="mx-2 pl-3 text-sm font-medium">User </span>
                         </Link>
                         <Link
-                            to='/dashboard/service-management'
+                            to='/dashboard/booking-management'
                             className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
                         >
                             <Wallet className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />
-                            <span className="mx-2 text-sm font-medium">Booking Management</span>
+                            <span className="mx-2 pl-3 text-sm font-medium">Booking </span>
                         </Link>
                     </div>
                 </nav>

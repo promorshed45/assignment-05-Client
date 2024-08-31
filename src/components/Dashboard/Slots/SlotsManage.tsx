@@ -15,22 +15,9 @@ import {
   useGetSlotsQuery,
   useUpdateSlotMutation,
 } from "@/redux/features/slot/slotApi";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useGetServicesQuery } from "@/redux/api/ServiceApi";
 import { useAppSelector } from "@/redux/hook";
 import { toast } from "sonner";

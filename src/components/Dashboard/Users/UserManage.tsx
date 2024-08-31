@@ -3,24 +3,11 @@ import {
     useGetAllUsersQuery,
     useUpdateUserRoleMutation,
 } from "@/redux/api/userApi";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hook";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-
-const roleColors: { [key: string]: string } = {
-    admin: "bg-red-500 text-white",
-    user: "bg-[#30415A] text-white",
-};
 
 const UserManage = () => {
     const { token } = useAppSelector((state) => state.user);
@@ -66,7 +53,10 @@ const UserManage = () => {
                                             <TableCell className="font-medium">{name}</TableCell>
                                             <TableCell>{email}</TableCell>
                                             <TableCell>
-                                                <div className="px-2 py-2 rounded-md text-center font-semibold bg-green-300 text-slate-950">
+                                                <div
+                                                    className={`px-2 py-2 rounded-md text-center font-semibold ${role === 'admin' ? 'bg-green-300' : 'bg-slate-500'
+                                                        } text-slate-950`}
+                                                >
                                                     {role}
                                                 </div>
                                             </TableCell>
@@ -87,7 +77,6 @@ const UserManage = () => {
                                                     </SelectContent>
                                                 </Select>
                                             </TableCell>
-
                                         </TableRow>
                                     );
                                 })}
