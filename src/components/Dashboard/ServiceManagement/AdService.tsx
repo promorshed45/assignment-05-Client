@@ -48,8 +48,6 @@ const AddService = () => {
   const onSubmit = async (values: TFormValues) => {
     const toastId = toast.loading("Please wait...");
 
-    console.log('Add service data:', values);
-
     try {
       const payload = {
         ...values,
@@ -58,8 +56,7 @@ const AddService = () => {
         isDeleted: false, 
       };
 
-      const res = await addService({payload, token}).unwrap();
-      console.log('Service added:', res);
+      await addService({payload, token}).unwrap();
 
       toast.dismiss(toastId);
       toast.success("Service added successfully!");

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
 import { Button } from "@/components/ui/button";
@@ -125,7 +126,7 @@ const ServiceManage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody className='bg-transparent'>
-                {data?.data?.map((service) => {
+                {data?.data?.map((service: any) => {
                   const { _id, description, duration, name, price, createdAt } =
                     service;
                   return (
