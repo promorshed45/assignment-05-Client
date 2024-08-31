@@ -25,12 +25,10 @@ const Login = () => {
 
         try {
             const data = await loginUser(userData).unwrap();
-            console.log("Full API Response:", data);
 
             const { token } = data;
             const user = data.data;
 
-            console.log("token", token, "user:", user);
             dispatch(setToken(token));
             dispatch(setUser(user));
             toast.success("Successfully logged in", {

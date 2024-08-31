@@ -13,8 +13,6 @@ import { Button } from "../../ui/button";
 
 // Header Component
 const Header = ({ title, imageUrl }: { title: string, imageUrl: string }) => {
-  const navigate = useNavigate();
-
   return (
     <div className="relative w-full h-64 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${imageUrl})` }}>
       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center px-6">
@@ -31,8 +29,8 @@ const ServiceInfo = ({ description, price, duration }: { description: string, pr
     <h2 className="text-2xl font-semibold mb-4">Service Details</h2>
     <p className="text-gray-700 leading-relaxed">{description}</p>
     <div className="flex justify-between pt-3">
-    <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Price: </span> ${price}</p>
-    <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Duration: </span>  {duration} mins</p>
+      <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Price: </span> ${price}</p>
+      <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Duration: </span>  {duration} mins</p>
     </div>
   </div>
 );
@@ -58,10 +56,10 @@ const SlotBooking = ({
             slot.isBooked === "cancelled"
           }
           className={`${selectedSlots.includes(slot._id)
-              ? "bg-green-500 text-white shadow-lg"
-              : slot.isBooked === "available"
-                ? "text-white bg-blue-500  hover:bg-blue-700"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            ? "bg-green-500 text-white shadow-lg"
+            : slot.isBooked === "available"
+              ? "text-white bg-blue-500  hover:bg-blue-700"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
         >
           {slot.startTime} - {slot.endTime}
@@ -91,8 +89,7 @@ const ServiceDetails = () => {
   const dispatch = useAppDispatch();
   const selectedSlots = useAppSelector((state) => state.slot.selectedSlots);
 
-  const {
-    data: serviceData,
+  const {    data: serviceData,
     isLoading: isServiceLoading,
     isError: isServiceError,
   } = useGetServiceByIdQuery(id!);
@@ -145,8 +142,7 @@ const ServiceDetails = () => {
         </div>
 
         <div className="flex justify-center">
-          
-            <div className="shadow-md rounded-md">
+          <div className="shadow-md rounded-md">
             <Calendar
               value={selectedDate}
               className="w-full text-center border-none rounded-md p-2"
@@ -156,17 +152,17 @@ const ServiceDetails = () => {
                   : ""
               }
             />
-            </div>
-         
-          
+          </div>
+
+
         </div>
         <SlotBooking
-            slotsData={slotsData}
-            selectedSlots={selectedSlots}
-            isBooking={isBooking}
-            handleSlotClick={handleSlotClick}
-            handleBooking={handleBooking}
-          />
+          slotsData={slotsData}
+          selectedSlots={selectedSlots}
+          isBooking={isBooking}
+          handleSlotClick={handleSlotClick}
+          handleBooking={handleBooking}
+        />
       </div>
     </div>
   );

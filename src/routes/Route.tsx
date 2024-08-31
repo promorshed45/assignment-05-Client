@@ -10,6 +10,7 @@ import ServiceManage from "@/components/Dashboard/ServiceManagement/ServiceManag
 import ServiceDetails from "@/components/page/Services/ServiceDetails";
 import AllReviews from "@/components/page/AllReviews";
 import SlotsManage from "@/components/Dashboard/Slots/SlotsManage";
+import UserManage from "@/components/Dashboard/Users/UserManage";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
       {
         path: 'slots-management', 
         element: <SlotsManage/>
+      },
+
+      {
+        path: 'users-management', 
+        element: <UserManage/>
       }
     ]
   }

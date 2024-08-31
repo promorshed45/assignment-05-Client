@@ -19,14 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table";
 
 import { formatDistanceToNow } from "date-fns";
 import { ListOrderedIcon, SearchIcon } from "lucide-react";
@@ -147,7 +140,7 @@ const ServiceManage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <UpdateServiceData id={_id} data={service}/>
+                          <UpdateServiceData id={_id} data={service} />
                           <DeleteService id={_id} />
                         </div>
                       </TableCell>
@@ -176,11 +169,10 @@ const ServiceManage = () => {
               <PaginationItem key={i + "page"}>
                 <PaginationLink
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`${
-                    page === i + 1
+                  className={`${page === i + 1
                       ? "bg-primary text-muted hover:bg-primary"
                       : "text-primary"
-                  } border-[1px] border-primary`}
+                    } border-[1px] border-primary`}
                 >
                   {i + 1}
                 </PaginationLink>

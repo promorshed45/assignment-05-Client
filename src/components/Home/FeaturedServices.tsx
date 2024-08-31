@@ -6,16 +6,13 @@ import { Link } from "react-router-dom";
 const FeaturedServices = () => {
   const { data, isError, isLoading } = useGetServicesQuery("");
 
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Something went wrong. Please try again later.</p>;
+  
   return (
     <section className="py-12 px-5 sm:px-10 bg-yellow-50">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center text-yellow-500 mb-8"> Featured Services </h2>
-        {isLoading ? (
-          <div className="text-2xl text-[#30415A]">Loading...</div>
-        ) : isError ? (
-          <div className="text-2xl text-red-500">Something went wrong!</div>
-        ) :
-          (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {data?.data?.slice(0, 6).map((data: any) => (
                 <Link
@@ -39,7 +36,6 @@ const FeaturedServices = () => {
                 </Link>
               ))}
             </div>
-          )}
       </div>
     </section>
   );

@@ -31,7 +31,7 @@ const AdminMenu = () => {
                             <span className="mx-2 text-sm font-medium">Slot Management</span>
                         </Link>
                         <Link
-                            to='/dashboard/slots-management'
+                            to='/dashboard/users-management'
                             className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
                         >
                             <FaUser className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />

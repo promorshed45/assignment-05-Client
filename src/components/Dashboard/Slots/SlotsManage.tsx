@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -50,7 +50,7 @@ const SlotsManage = () => {
   const { data: services } = useGetServicesQuery("");
   const { token } = useAppSelector((state) => state.user);
 
-  const { register, handleSubmit, setValue, watch } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       service: "",
       date: "",
@@ -115,14 +115,13 @@ const SlotsManage = () => {
         <div className="text-center mx-auto">
           <h1 className="text-2xl font-bold mb-6">Slot Management</h1>
         </div>
-
         {/* Create Slot Modal */}
         <div className="flex justify-end">
           <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
             <DialogTrigger asChild>
               <Button variant="default" size="sm" className="gap-2">
                 <PlusIcon className="h-4 w-4" />
-                Add Slot
+                Add New Slot
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -202,7 +201,7 @@ const SlotsManage = () => {
                       <TableCell className="font-medium">{service.name}</TableCell>
                       <TableCell> {new Date(date).toLocaleDateString()} </TableCell>
                       <TableCell> {startTime} </TableCell>
-                      <TableCell>${endTime}</TableCell>
+                      <TableCell>{endTime}</TableCell>
 
                       <TableCell
 

@@ -9,7 +9,6 @@ const ReviewSection = () => {
   const { data, isError, isLoading } = useGetAllReviewsQuery("");
   const reviews = data?.data;
 
-  console.log(reviews);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong. Please try again later.</p>;
@@ -17,7 +16,6 @@ const ReviewSection = () => {
   const reviewsArray = Array.isArray(reviews) ? reviews : [];
   const totalReviews = reviewsArray.length;
 
-  console.log(totalReviews);
 
   // Calculate the average rating
   const averageRating =
