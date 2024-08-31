@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Dialog,
   DialogClose,
@@ -17,48 +16,54 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm, Controller } from "react-hook-form";
 import { PencilIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useUpdateServiceMutation } from '@/redux/api/ServiceApi';
+import { useUpdateServiceMutation } from "@/redux/api/ServiceApi";
+import { useAppSelector } from "@/redux/hook";
+import { useNavigate } from "react-router";
 
 type TValues = {
   name: string;
   description: string;
+  image: string;
   price: number;
   duration: number;
 };
 
-
-
-const EditService = ({ data }: IService) => {
+const UpdateServiceData = ({ data }: { data: IService }) => {
   const [updateService] = useUpdateServiceMutation();
+  const { token } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
-  // Initialize the form methods
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<TValues>({
     defaultValues: {
-      name: data.name || '',
-      description: data.description || '',
+      name: data.name || "",
+      image: data.image || "",
+      description: data.description || "",
       price: data.price || 0,
       duration: data.duration || 0,
     },
   });
 
-  // Handle form submission
-  const onSubmit = async (values: TValues) => {
+  const onSubmit = async (updatedService: TValues) => {
     try {
-      await updateService(values).unwrap();
-      toast.success('Service updated successfully!');
-    } catch (error) {
-      toast.error('Failed to update service.');
-    }
-  };
+      const payload = {
+        ...updatedService,
+        price: Number(updatedService.price),
+        duration: Number(updatedService.duration),
+      };
 
-  // Get error message for a specific field
-  const getErrorMessage = (field: keyof TValues) => {
-    return errors[field]?.message as string;
+      await updateService({ id: data._id.toString(), token, payload, }).unwrap();
+      toast.success("Service updated successfully!", {
+        duration: 2000,
+      });
+      navigate('/dashboard/service-management')
+    } catch (error) {
+      console.error("Error updating service:", error);
+      toast.error("Failed to update service.");
+    }
   };
 
   return (
@@ -78,7 +83,9 @@ const EditService = ({ data }: IService) => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">Name</Label>
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
             <Controller
               name="name"
               control={control}
@@ -91,10 +98,35 @@ const EditService = ({ data }: IService) => {
                 />
               )}
             />
-            {errors.name && <p className="text-red-600 col-span-4">{getErrorMessage("name")}</p>}
+            {errors.name && (
+              <p className="text-red-600 col-span-4">{errors.name.message}</p>
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">Description</Label>
+            <Label htmlFor="image" className="text-right">
+              Image URL
+            </Label>
+            <Controller
+              name="image"
+              control={control}
+              rules={{ required: "Image URL is required" }}
+              render={({ field }) => (
+                <Input
+                  id="image"
+                  placeholder="Enter image URL"
+                  className="col-span-3"
+                  {...field}
+                />
+              )}
+            />
+            {errors.image && (
+              <p className="text-red-600 col-span-4">{errors.image.message}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
             <Controller
               name="description"
               control={control}
@@ -107,10 +139,16 @@ const EditService = ({ data }: IService) => {
                 />
               )}
             />
-            {errors.description && <p className="text-red-600 col-span-4">{getErrorMessage("description")}</p>}
+            {errors.description && (
+              <p className="text-red-600 col-span-4">
+                {errors.description.message}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="duration" className="text-right">Duration</Label>
+            <Label htmlFor="duration" className="text-right">
+              Duration
+            </Label>
             <Controller
               name="duration"
               control={control}
@@ -123,10 +161,16 @@ const EditService = ({ data }: IService) => {
                 />
               )}
             />
-            {errors.duration && <p className="text-red-600 col-span-4">{getErrorMessage("duration")}</p>}
+            {errors.duration && (
+              <p className="text-red-600 col-span-4">
+                {errors.duration.message}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="price" className="text-right">Price</Label>
+            <Label htmlFor="price" className="text-right">
+              Price
+            </Label>
             <Controller
               name="price"
               control={control}
@@ -140,7 +184,9 @@ const EditService = ({ data }: IService) => {
                 />
               )}
             />
-            {errors.price && <p className="text-red-600 col-span-4">{getErrorMessage("price")}</p>}
+            {errors.price && (
+              <p className="text-red-600 col-span-4">{errors.price.message}</p>
+            )}
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -148,7 +194,7 @@ const EditService = ({ data }: IService) => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">Save Service</Button>
+            <Button type="submit">Update Service</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -156,4 +202,4 @@ const EditService = ({ data }: IService) => {
   );
 };
 
-export default EditService;
+export default UpdateServiceData;

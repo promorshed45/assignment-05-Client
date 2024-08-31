@@ -14,7 +14,6 @@ import { useAppSelector } from "@/redux/hook";
 
 const UserDropDown = () => {
   const { user } = useAppSelector((state) => state.user);
-  console.log(user);
 
   return (
     <DropdownMenu>

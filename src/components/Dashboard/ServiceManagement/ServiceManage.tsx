@@ -31,11 +31,11 @@ import { formatDistanceToNow } from "date-fns";
 import { ListOrderedIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import Addservice from "./AdService";
-import EditService from "./EditService";
 import DeleteService from "./DeleteService";
 import { Badge } from "@/components/ui/badge";
 import { trimText } from "@/utilis/trimText";
 import { useGetServicesQuery } from "@/redux/api/ServiceApi";
+import UpdateServiceData from "./updateServiceData";
 
 const ServiceManage = () => {
   const [limit, setLimit] = useState(10);
@@ -146,7 +146,7 @@ const ServiceManage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <EditService data={service} />
+                          <UpdateServiceData id={_id} data={service}/>
                           <DeleteService id={_id} />
                         </div>
                       </TableCell>

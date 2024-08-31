@@ -3,7 +3,7 @@ import { useGetServicesQuery } from "@/redux/api/ServiceApi";
 import { Link } from "react-router-dom";
 
 
-const ServicesSection = () => {
+const AllServices = () => {
   const { data, isError, isLoading } = useGetServicesQuery("");
 
   console.log('service data', data);
@@ -35,7 +35,11 @@ const ServicesSection = () => {
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-slate -800">{data.name}</h3>
-                      <p className="mt-4 text-gray-600">{data.description}</p>
+                      <p className="mt-4 text-gray-600">{data.description.slice(0,99)}...</p>
+                      <div className="flex justify-between items-center pt-2">
+                      <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Price: </span> ${data.price}</p>
+                      <p className="text-gray-700 leading-relaxed"> <span className="font-semibold"> Duration: </span>  {data.duration} mins</p>
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -47,4 +51,4 @@ const ServicesSection = () => {
   );
 };
 
-export default ServicesSection;
+export default AllServices;

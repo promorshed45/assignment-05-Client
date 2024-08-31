@@ -9,7 +9,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useAppSelector, useAppDispatch } from "@/redux/hook";
 import { deselectSlot, selectSlot } from "@/redux/features/slot/slotSlice";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 // Header Component
 const Header = ({ title, imageUrl }: { title: string, imageUrl: string }) => {

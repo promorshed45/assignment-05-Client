@@ -60,7 +60,7 @@ const ReviewSection = () => {
             <div className="flex justify-center">
               <Link to="/allreviews">
                 <Button className="mt-4 hover:underline">
-                  Read all reviews
+                  See all reviews
                 </Button>
               </Link>
             </div>

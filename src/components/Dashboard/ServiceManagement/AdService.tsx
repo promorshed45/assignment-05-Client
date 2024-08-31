@@ -15,17 +15,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useAddServiceMutation } from "@/redux/api/ServiceApi";
+import { useCreateServiceMutation } from "@/redux/api/ServiceApi";
+import { useAppSelector } from "@/redux/hook";
 
 type TFormValues = {
   name: string;
+  image: string;
   description: string;
   price: number;
   duration: number;
 };
 
 const AddService = () => {
-  const [createService] = useAddServiceMutation(undefined);
+  const [addService] = useCreateServiceMutation();
+  const { token } = useAppSelector((state) => state.user);
 
   const {
     control,
@@ -35,19 +38,38 @@ const AddService = () => {
   } = useForm<TFormValues>({
     defaultValues: {
       name: "",
+      image: "",
       description: "",
       price: 0,
       duration: 0,
     },
   });
 
-  const onSubmit = async (data: TFormValues) => {
+  const onSubmit = async (values: TFormValues) => {
+    const toastId = toast.loading("Please wait...");
+
+    console.log('Add service data:', values);
+
     try {
-      await createService(data).unwrap();
+      const payload = {
+        ...values,
+        price: Number(values.price),
+        duration: Number(values.duration),
+        isDeleted: false, 
+      };
+
+      const res = await addService({payload, token}).unwrap();
+      console.log('Service added:', res);
+
+      toast.dismiss(toastId);
       toast.success("Service added successfully!");
       reset();
     } catch (error) {
-      toast.error("Failed to add service.");
+      console.error('Error adding service:', error);
+      toast.dismiss(toastId);
+      toast.error("Something went wrong while making this request", {
+        description: "Please try again.",
+      });
     }
   };
 
@@ -68,9 +90,7 @@ const AddService = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+            <Label htmlFor="name" className="text-right">Name</Label>
             <Controller
               name="name"
               control={control}
@@ -88,10 +108,29 @@ const AddService = () => {
               <p className="text-red-600 col-span-4">{errors.name.message}</p>
             )}
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Description
-            </Label>
+            <Label htmlFor="image" className="text-right">Image URL</Label>
+            <Controller
+              name="image"
+              control={control}
+              rules={{ required: "Image URL is required" }}
+              render={({ field }) => (
+                <Input
+                  id="image"
+                  placeholder="Enter image URL"
+                  className="col-span-3"
+                  {...field}
+                />
+              )}
+            />
+            {errors.image && (
+              <p className="text-red-600 col-span-4">{errors.image.message}</p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">Description</Label>
             <Controller
               name="description"
               control={control}
@@ -106,15 +145,12 @@ const AddService = () => {
               )}
             />
             {errors.description && (
-              <p className="text-red-600 col-span-4">
-                {errors.description.message}
-              </p>
+              <p className="text-red-600 col-span-4">{errors.description.message}</p>
             )}
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="duration" className="text-right">
-              Duration
-            </Label>
+            <Label htmlFor="duration" className="text-right">Duration (in minutes)</Label>
             <Controller
               name="duration"
               control={control}
@@ -129,15 +165,12 @@ const AddService = () => {
               )}
             />
             {errors.duration && (
-              <p className="text-red-600 col-span-4">
-                {errors.duration.message}
-              </p>
+              <p className="text-red-600 col-span-4">{errors.duration.message}</p>
             )}
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="price" className="text-right">
-              Price
-            </Label>
+            <Label htmlFor="price" className="text-right">Price</Label>
             <Controller
               name="price"
               control={control}
@@ -156,11 +189,10 @@ const AddService = () => {
               <p className="text-red-600 col-span-4">{errors.price.message}</p>
             )}
           </div>
+
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline" id="close_service">
-                Cancel
-              </Button>
+              <Button type="button" variant="outline">Cancel</Button>
             </DialogClose>
             <Button type="submit">Save Service</Button>
           </DialogFooter>

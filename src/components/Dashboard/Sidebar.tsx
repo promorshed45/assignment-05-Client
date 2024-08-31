@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import { BarChart, Wallet, Newspaper, BellRing, Paperclip, LogIn, Menu } from 'lucide-react';
+import { useState } from "react";
+import { Menu } from "lucide-react";
 import logo from "../../../src/assets/logo.svg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useAppSelector } from "@/redux/hook";
+import AdminMenu from "./AdminDashboard/AdminMenu";
+import UserMenu from "./UserDashboard/UserMenu";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { user } = useAppSelector((state) => state.user);
+    const role = user.role;
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -12,61 +17,17 @@ const Sidebar = () => {
 
     return (
         <div className="z-50 flex h-screen overflow-hidden border-r border-gray-200 dark:border-gray-800">
-            <aside className={`transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto px-5 py-8 transition-transform duration-300 lg:static lg:translate-x-0`}>
-            <div className="h-14 w-26">
-              <Link to="/">
-                <img
-                  alt="Elite Car Wash"
-                  className="h-full w-full"
-                  src={logo}
-                />
-              </Link>
-            </div>
-                <div className="mt-6 flex flex-1 flex-col justify-between">
-                    <nav className="-mx-3 space-y-6">
-                        <div className="space-y-3">
-                            <label className="px-3 text-xs font-semibold uppercase text-gray-500">Analytics</label>
-                            <a
-                                className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
-                                href="#"
-                            >
-                                <BarChart className="h-5 w-5 text-gradient-to-r from-rose-400 to-red-500" aria-hidden="true" />
-                                <span className="mx-2 text-sm font-medium">Dashboard</span>
-                            </a>
-                            <Link
-                            to='/dashboard/service-management'
-                                className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
-                            >
-                                <Wallet className="h-5 w-5 text-gradient-to-r from-indigo-500 to-purple-500" aria-hidden="true" />
-                                <span className="mx-2 text-sm font-medium">Service</span>
-                            </Link>
-                        </div>
-                        <div className="space-y-3">
-                            <label className="px-3 text-xs font-semibold uppercase text-gray-500">Content</label>
-                            <a
-                                className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
-                                href="#"
-                            >
-                                <Newspaper className="h-5 w-5 text-gradient-to-r from-green-400 to-teal-500" aria-hidden="true" />
-                                <span className="mx-2 text-sm font-medium">Blogs</span>
-                            </a>
-                            <a
-                                className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
-                                href="#"
-                            >
-                                <BellRing className="h-5 w-5 text-gradient-to-r from-yellow-400 to-orange-500" aria-hidden="true" />
-                                <span className="mx-2 text-sm font-medium">Notifications</span>
-                            </a>
-                            <a
-                                className="flex items-center rounded-lg px-3 py-2 dark:text-gray-300 transition transform duration-300 hover:bg-gray-200 hover:scale-105 dark:hover:text-gray-900"
-                                href="#"
-                            >
-                                <Paperclip className="h-5 w-5 text-gradient-to-r from-blue-400 to-cyan-500" aria-hidden="true" />
-                                <span className="mx-2 text-sm font-medium">Checklists</span>
-                            </a>
-                        </div>
-                    </nav>
+            <aside
+                className={`transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    } fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto px-5 py-8 transition-transform duration-300 lg:static lg:translate-x-0`}
+            >
+                <div className="h-14 w-26">
+                    <Link to="/">
+                        <img alt="Elite Car Wash" className="h-full w-full" src={logo} />
+                    </Link>
                 </div>
+
+                {role === "admin" ? <AdminMenu /> : <UserMenu />}
             </aside>
             <div className="relative flex-1 bg-white p-8 sm:p-0">
                 <button

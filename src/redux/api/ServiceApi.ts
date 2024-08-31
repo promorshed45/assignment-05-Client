@@ -44,13 +44,13 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    addService: builder.mutation({
-      query: ({ serviceDetails, token }) => {
-        // console.log(serviceDetails, "Token", token);
+    createService: builder.mutation({
+      query: ({ payload, token }) => {
+        console.log(payload, "Token", token);
         return {
           url: "/services",
           method: "POST",
-          body: serviceDetails,
+          body: payload,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,7 +60,7 @@ const authApi = baseApi.injectEndpoints({
     }),
     updateService: builder.mutation({
       query: ({ id, token, updatedService }) => {
-        console.log(id, token, updatedService);
+        console.log('api teke', id, token, updatedService);
         return {
           url: `/services/${id}`,
           method: "PATCH",
@@ -73,8 +73,8 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["Service"],
     }),
     deleteService: builder.mutation({
-      query: ({ serviceId, token }) => ({
-        url: `/services/${serviceId}`,
+      query: ({ id, token }) => ({
+        url: `/services/${id}`,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ export const {
   useGetServiceByIdQuery,
   useGetSlotsByServiceIdQuery,
   useGetSingleSlotsByIdQuery,
-  useAddServiceMutation,
+  useCreateServiceMutation,
   useDeleteServiceMutation,
   useUpdateServiceMutation,
 } = authApi;

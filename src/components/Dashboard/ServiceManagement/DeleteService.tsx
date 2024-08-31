@@ -17,6 +17,7 @@ import { useDeleteServiceMutation } from "@/redux/api/ServiceApi";
 
 const DeleteService = ({ id }: { id: string }) => {
   const [deletService] = useDeleteServiceMutation();
+
   const handleDelete = async () => {
     const toastId = toast.loading("Please wait...");
     const modalCloseBtn = document.getElementById(
@@ -24,7 +25,7 @@ const DeleteService = ({ id }: { id: string }) => {
     ) as HTMLElement;
 
     try {
-      const { data } = await deletService(id);
+      const { data } = await deletService({id});
       if (!data) {
         toast.dismiss(toastId);
 
@@ -52,26 +53,24 @@ const DeleteService = ({ id }: { id: string }) => {
           <span className="sr-only">Delete</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] flex flex-col justify-center">
         <div className="flex flex-col items-center justify-center gap-4 py-8">
           <AlertCircleIcon className="size-12 text-red-500" />
           <div className="space-y-2 text-center">
             <DialogTitle>Are you sure?</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete the
-              selected item.
+            "You won't be able to revert this!",
             </DialogDescription>
           </div>
+          
         </div>
-        <DialogFooter>
-          <div>
+        <DialogFooter className="flex justify-center items-center">
             <DialogClose asChild>
               <Button variant="outline" id="delete-modal-close">
                 Cancel
               </Button>
             </DialogClose>
-          </div>
-          <Button variant="destructive" onClick={handleDelete}>
+            <Button variant="destructive" onClick={handleDelete}>
             Confirm
           </Button>
         </DialogFooter>
