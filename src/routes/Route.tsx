@@ -12,7 +12,6 @@ import AllReviews from "@/components/page/AllReviews";
 import SlotsManage from "@/components/Dashboard/Slots/SlotsManage";
 import UserManage from "@/components/Dashboard/Users/UserManage";
 import BookingList from "@/components/Dashboard/Users/BookingList";
-import AdminLayout from "@/components/Dashboard/Layout/AdminLayout";
 import BookingPage from "@/components/page/Booking";
 
 const router = createBrowserRouter([
@@ -37,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/booking",
-        element: <BookingPage/>
+        element: <></>
+      },
+      {
+        path: "booking/:serviceId/:slotId",
+        element: <BookingPage />,
       },
       {
         path: "/login",

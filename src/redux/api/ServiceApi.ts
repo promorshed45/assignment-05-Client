@@ -33,16 +33,27 @@ const authApi = baseApi.injectEndpoints({
     }),
     getSlotsByServiceId: builder.query({
       query: (id: string) => ({
-        url: `/slots/availability?serviceId=${id}`,
+        url: `/slots/availability/?${id}`,
         method: "GET",
       }),
     }),
+  
     getSingleSlotsById: builder.query({
-      query: (id: string) => ({
-        url: `/slots/availability/${id}`,
-        method: "GET",
-      }),
+      query: (id: string | undefined) => {
+        if (!id) {
+          console.error("Service ID is undefined"); // Log an error if ID is undefined
+          return { url: '', method: 'GET' }; // Return an empty request or handle it as needed
+        }
+    
+        console.log("Service ID:", id); // Log the ID for debugging
+        return {
+          url: `/slots/availability/${id}`, // Correctly include the id in the URL
+          method: "GET",
+        };
+      },
     }),
+    
+    
 
     createService: builder.mutation({
       query: ({ payload, token }) => {
