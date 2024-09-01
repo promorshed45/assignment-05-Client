@@ -24,11 +24,11 @@ const slotSlice = createSlice({
       state.selectedSlots = [];
     },
     // You can remove the clearSlots reducer if it's the same as resetSlots.
-    // clearSlots: (state) => {
-    //   state.selectedSlots = [];
-    // },
+    clearSlots: (state) => {
+      state.selectedSlots = [];
+    },
   },
 });
 
-export const { selectSlot, deselectSlot, resetSlots } = slotSlice.actions;
+export const { selectSlot, deselectSlot, resetSlots, clearSlots } = slotSlice.actions;
 export default slotSlice.reducer;
