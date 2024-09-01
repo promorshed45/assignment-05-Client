@@ -1,13 +1,5 @@
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IService } from "@/type/service";
@@ -20,30 +12,27 @@ import { useUpdateServiceMutation } from "@/redux/api/ServiceApi";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router";
 
-type TValues = {
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  duration: number;
-};
+// type updateServiceProps = {
+//   _id: string;
+//   name: string;
+//   description: string;
+//   image: string;
+//   price: number;
+//   duration: number;
+// };
 
-const UpdateServiceData = ({ data }: { data: IService }) => {
+const UpdateServiceData = ({ service }: any) => {
   const [updateService] = useUpdateServiceMutation();
   const { token } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TValues>({
+  const { control, handleSubmit, formState: { errors }, } = useForm<TValues>({
     defaultValues: {
-      name: data.name || "",
-      image: data.image || "",
-      description: data.description || "",
-      price: data.price || 0,
-      duration: data.duration || 0,
+      name: service.name || "",
+      image: service.image || "",
+      description: service.description || "",
+      price: service.price || 0,
+      duration: service.duration || 0,
     },
   });
 
@@ -55,7 +44,7 @@ const UpdateServiceData = ({ data }: { data: IService }) => {
         duration: Number(updatedService.duration),
       };
 
-      await updateService({ id: data._id.toString(), token, payload, }).unwrap();
+      await updateService({ id: _id.toString(), token, payload, }).unwrap();
       toast.success("Service updated successfully!", {
         duration: 2000,
       });

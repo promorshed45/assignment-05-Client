@@ -1,15 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useRegisterUserMutation } from '@/redux/features/auth/authApi';
 import { Textarea } from '@/components/ui/textarea';
 import { setUser } from '@/redux/features/userSlice';
 import { useDispatch } from 'react-redux';
 
+interface FieldValues {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    password: string;
+}
+
+
 const Register = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
     const navigate = useNavigate();
     const [registerUser] = useRegisterUserMutation();
     const dispatch = useDispatch();
@@ -38,9 +47,6 @@ const Register = () => {
         }
     };
 
-    
-    
-    
 
     return (
         <section>
@@ -110,7 +116,7 @@ const Register = () => {
                                         {...register('phone', {
                                             required: 'Phone number is required',
                                             pattern: {
-                                                value: /^\+?[1-9]\d{1,14}$/i, // Example pattern for international phone numbers
+                                                value: /^\+?[1-9]\d{1,14}$/i,
                                                 message: 'Enter a valid phone number'
                                             }
                                         })}

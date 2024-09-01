@@ -36,12 +36,10 @@ const ServiceManage = () => {
   const [page, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState("-createdAt");
-  const { data, isFetching } = useGetServicesQuery({
-    searchTerm,
-    limit,
-    page,
-    sort,
-  });
+  const { data, isLoading, isError } = useGetServicesQuery({ searchTerm, limit, page, sort, });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Something went wrong. Please try again later.</p>;
 
   return (
     <div className="w-full">
@@ -140,7 +138,7 @@ const ServiceManage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <UpdateServiceData id={_id} data={service} />
+                          <UpdateServiceData service={service} />
                           <DeleteService id={_id} />
                         </div>
                       </TableCell>
@@ -149,13 +147,6 @@ const ServiceManage = () => {
                 })}
               </TableBody>
             </Table>
-            {isFetching ? (
-              <div className="w-full h-full absolute top-0 left-0 skeleton opacity-[0.6] rounded-[10px] center">
-                <span className="text-primaryMat">Loading...</span>
-              </div>
-            ) : (
-              ""
-            )}
           </CardContent>
         </Card>
       </main>
@@ -170,8 +161,8 @@ const ServiceManage = () => {
                 <PaginationLink
                   onClick={() => setCurrentPage(i + 1)}
                   className={`${page === i + 1
-                      ? "bg-primary text-muted hover:bg-primary"
-                      : "text-primary"
+                    ? "bg-primary text-muted hover:bg-primary"
+                    : "text-primary"
                     } border-[1px] border-primary`}
                 >
                   {i + 1}

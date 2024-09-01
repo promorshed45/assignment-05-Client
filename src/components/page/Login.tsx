@@ -8,8 +8,15 @@ import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "@/redux/features/userSlice";
 
+interface FieldValues {
+    email: string;
+    password: string;
+}
+
+
 const Login = () => {
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
+
     const [loginUser] = useLoginUserMutation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,7 +32,6 @@ const Login = () => {
 
         try {
             const data = await loginUser(userData).unwrap();
-
             const { token } = data;
             const user = data.data;
 

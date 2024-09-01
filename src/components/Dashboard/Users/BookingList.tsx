@@ -5,13 +5,6 @@ import { useAppSelector } from "@/redux/hook";
 import { useGetAllBookingsQuery } from "@/redux/api/bookingApi";
 import { Card, CardContent } from "@/components/ui/card";
 
-const statusColors: { [key: string]: string } = {
-  confirmed: "bg-green-500 text-white",
-  pending: "bg-yellow-500 text-white",
-  canceled: "bg-red-500 text-white",
-  booked: "bg-[#30415A] text-white",
-};
-
 const BookingList: React.FC = () => {
   const { token } = useAppSelector((state) => state.user);
   const { data: bookings, isLoading, isError } = useGetAllBookingsQuery(token);

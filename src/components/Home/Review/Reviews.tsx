@@ -1,11 +1,12 @@
 import { useGetAllReviewsQuery } from '@/redux/features/auth/reviewApi';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import StarRating from "./StartRating";
 
 type Review = {
   _id: string;
   userId?: { name?: string }; 
   rating: number;
+  reviewName: string | undefined;
   feedback: string;
   createdAt: string;
 };
@@ -26,13 +27,13 @@ const Reviews = () => {
         return (
           <div key={_id} className="flex flex-col mb-10">
             <div className="flex items-center gap-4 mb-2">
-              <Avatar className="w-12 h-12 shadow-lg">
+            <Avatar className="w-12 h-12 shadow-lg">
                 <AvatarImage
                   src={`https://api.dicebear.com/6.x/initials/svg?seed=${reviewName}`}
                 />
-                <AvatarFallback>
+                {/* <AvatarFallback>
                   {reviewName[0]} 
-                </AvatarFallback>
+                </AvatarFallback> */}
               </Avatar>
               <div className="space-y-1 w-full">
                 <div className="flex justify-between items-center">
@@ -40,7 +41,7 @@ const Reviews = () => {
                 <div className="text-sm text-gray-500">{new Date(createdAt).toLocaleDateString()}</div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <StarRating rating={rating} /> 
+                    <StarRating rating={rating}/> 
                 <span className="ml-2 font-semibold">{rating}.0</span>
                 </div>
               </div>

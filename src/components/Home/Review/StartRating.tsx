@@ -1,35 +1,37 @@
-import { useState } from "react";
-import { GoStar, GoStarFill } from "react-icons/go";
+import React, { useState } from 'react';
+import { GoStar, GoStarFill } from 'react-icons/go';
 
-type StarRatingProps = {
+interface StarRatingProps {
   rating: number;
-  setRating: (rating: number) => void;
-  onClick?: (value: number) => void;
-};
+  setRating?: (rating: number) => void;
+  onClick?: (rating: number) => void;
+}
 
-const StarRating = ({ rating, setRating, onClick }: StarRatingProps) => {
-  const [hover, setHover] = useState<number | null>(null);
+const StarRating: React.FC<StarRatingProps> = ({ rating, setRating, onClick }) => {
+  const [hover, setHover] = useState<number>(0);
 
-  const handleClick = (star: number) => {
-    setRating(star);
+  const handleClick = (newRating: number) => {
+    if (setRating) {
+      setRating(newRating);
+    }
     if (onClick) {
-      onClick(star);
+      onClick(newRating);
     }
   };
 
   return (
-    <div className="flex gap-1">
+    <div className="flex items-center">
       {[1, 2, 3, 4, 5].map((star) => (
         <div
           key={star}
           className={`cursor-pointer transition-transform duration-300 transform ${
-            star <= (hover || rating) ? "text-yellow-500 scale-125" : "text-gray-300 scale-100"
+            star <= (hover || rating) ? "text-yellow-500" : "text-gray-300 scale-100"
           }`}
-          onClick={() => handleClick(star)} 
+          onClick={() => handleClick(star)}
           onMouseEnter={() => setHover(star)}
-          onMouseLeave={() => setHover(null)}
+          onMouseLeave={() => setHover(0)}
         >
-          {star <= (hover || rating) ? <GoStarFill /> : <GoStar />}
+          {star <= (hover || rating) ? <GoStarFill size={24} /> : <GoStar size={24} />}
         </div>
       ))}
     </div>

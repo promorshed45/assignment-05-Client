@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../../ui/button";
@@ -5,35 +6,45 @@ import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
 import StarRating from "./StartRating";
 import { useCreateReviewMutation } from "@/redux/features/auth/reviewApi";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAppSelector } from '@/redux/hook';
+
+interface FieldValues {
+  feedback: string;
+  rating: number;
+}
 
 
 const AddReview = () => {
     const [rating, setRating] = useState(0);
     const [addRevies] = useCreateReviewMutation();
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<FieldValues>();
+
     const { user } = useAppSelector((state) => state.user);
     const userId = user._id;
 
     const onSubmit = async (ReviewsData: FieldValues) => {
-        console.log('ReviewsData', ReviewsData);
-        const toastId = toast.loading("Please wait...");
-        try {
-          await addRevies({...ReviewsData, userId}).unwrap();
     
-          toast.dismiss(toastId);
-          toast.success("Review submitted!", {
-            description: "Thanks for your feedback",
+      try {
+        if (!userId) {
+          toast.error("Please login...",{
+            duration: 1000,
           });
-    
-          reset(); 
-        } catch (error) {
-          console.error("Error while submitting review:", error); 
-          toast.dismiss(toastId); 
-          toast.error("Something went wrong while making this request");
+          return;
         }
-      };
+    
+        await addRevies({ ...ReviewsData, userId }).unwrap();
+        toast.success("Review submitted!", {
+          description: "Thanks for your feedback",
+        });
+    
+        reset(); 
+      } catch (err: any) {
+        console.error("Error:", err);
+        toast.error(err.data?.message || "Unknown error occurred");
+      }
+    };
+    
 
       
     return (
@@ -73,7 +84,6 @@ const AddReview = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.feedback.message}</p>
                 )}
               </div>
-              
               <Button
                 type="submit"
                 className="bg-blue-600 mx-auto text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"

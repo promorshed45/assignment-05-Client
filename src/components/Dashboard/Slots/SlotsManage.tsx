@@ -31,7 +31,7 @@ export enum SlotStatus {
 }
 
 const SlotsManage = () => {
-  const { data: slots, refetch, isFetching } = useGetSlotsQuery(undefined);
+  const { data: slots, refetch, is } = useGetSlotsQuery(undefined);
   const [updateSlot] = useUpdateSlotMutation();
   const [createSlot] = useCreateSlotMutation();
   const { data: services } = useGetServicesQuery("");
@@ -226,13 +226,6 @@ const SlotsManage = () => {
                 })}
               </TableBody>
             </Table>
-            {isFetching ? (
-              <div className="w-full h-full absolute top-0 left-0 skeleton opacity-[0.6] rounded-[10px] center">
-                <span className="text-primaryMat">Loading...</span>
-              </div>
-            ) : (
-              ""
-            )}
           </CardContent>
         </Card>
       </main>

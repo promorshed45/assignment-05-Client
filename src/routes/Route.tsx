@@ -12,6 +12,7 @@ import AllReviews from "@/components/page/AllReviews";
 import SlotsManage from "@/components/Dashboard/Slots/SlotsManage";
 import UserManage from "@/components/Dashboard/Users/UserManage";
 import BookingList from "@/components/Dashboard/Users/BookingList";
+import AdminLayout from "@/components/Dashboard/Layout/AdminLayout";
 
 const router = createBrowserRouter([
   {

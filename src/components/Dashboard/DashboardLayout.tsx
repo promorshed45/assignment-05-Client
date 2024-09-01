@@ -1,22 +1,37 @@
-
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { ThemeProvider } from "../ui/ThemeProvider";
+import AdminOverview from "./Users/AdminOverview";
+import UserDashboard from "./Users/UserDashboard";
+import { useAppSelector } from '@/redux/hook';
 
 const DashboardLayout = () => {
+  const { user } = useAppSelector((state) => state.user);
+  const location = useLocation();
+
+  // Determine if the current route is the main dashboard route
+  const isDashboardHome = location.pathname === '/dashboard';
+
   return (
     <ThemeProvider defaultTheme="dark"> 
-    <div className="w-full h-screen flex items-start justify-start pb-[30px]">
+      <div className="w-full h-screen flex items-start justify-start pb-[30px]">
         <Sidebar />
-        <div className="w-full h-full flex-col flex px-3 bg-gray-100 dark:bg-transparent ">
+        <div className="w-full h-full flex-col flex px-3 bg-gray-100 dark:bg-transparent">
           <Header />
-          <div className="h-full overflow-auto smoothBar ">
+          <div className="h-full overflow-auto smoothBar">
+            
+            {/* Show AdminOverview or UserDashboard only on the dashboard home page */}
+            {isDashboardHome && (
+              user.role === 'admin' ? <AdminOverview/> : <UserDashboard/>
+            )}
+            
+            {/* Render other components/pages */}
             <Outlet />
           </div>
         </div>
       </div>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 };
 

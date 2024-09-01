@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+Live Link (Server): https://car-service-server-three.vercel.app/
+Live Link (client): 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+github Link (client): https://github.com/promorshed45/assignment-05-Client
+github Link (Server): https://github.com/promorshed45/assignment-05-Server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Admin Login
+Email:* admin@gmail.com
+Password: admin123
 
-## Expanding the ESLint configuration
+User Login
+Email:* user@gmail.com
+Password: user123
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+update service - not ok
+revie section teke login page e niye jete hobe... login karar por abr home page niye aste hobe.
+Search, filter, and sort services (e.g., by price, duration). not ok
+booked service - not ok
+booked page - not ok
+create service (admin panel) model automatic close -not ok
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+now working
+user dashboard

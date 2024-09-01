@@ -29,21 +29,9 @@ type TFormValues = {
 const AddService = () => {
   const [addService] = useCreateServiceMutation();
   const { token } = useAppSelector((state) => state.user);
+const { control, handleSubmit, formState: { errors }, reset } = useForm<TFormValues>({ 
+  defaultValues: { name: "", image: "", description: "", price: 0, duration: 0 } });
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<TFormValues>({
-    defaultValues: {
-      name: "",
-      image: "",
-      description: "",
-      price: 0,
-      duration: 0,
-    },
-  });
 
   const onSubmit = async (values: TFormValues) => {
     const toastId = toast.loading("Please wait...");

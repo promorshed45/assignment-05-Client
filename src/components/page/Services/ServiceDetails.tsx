@@ -111,7 +111,7 @@ const ServiceDetails = () => {
   };
 
   const handleBooking = async () => {
-    if (selectedSlots.length === 0 || !serviceData || !user.userId) {
+    if (selectedSlots.length === 0 || !serviceData || !user._id) {
       console.error("Missing booking information");
       return;
     }
