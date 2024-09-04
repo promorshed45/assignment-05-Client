@@ -14,7 +14,7 @@ const DashboardLayout = () => {
   const isDashboardHome = location.pathname === '/dashboard';
 
   return (
-    <ThemeProvider defaultTheme="dark"> 
+    <ThemeProvider defaultTheme="light"> 
       <div className="w-full h-screen flex items-start justify-start pb-[30px]">
         <Sidebar />
         <div className="w-full h-full flex-col flex px-3 bg-gray-100 dark:bg-transparent">

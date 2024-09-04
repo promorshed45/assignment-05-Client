@@ -22,11 +22,10 @@ const AddReview = () => {
 
     const { user } = useAppSelector((state) => state.user);
     const userId = user._id;
-
     const onSubmit = async (ReviewsData: FieldValues) => {
     
       try {
-        if (!userId) {
+        if (!user) {
           toast.error("Please login...",{
             duration: 1000,
           });

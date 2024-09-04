@@ -23,11 +23,7 @@ const BookingPage = () => {
   }>();
 
   const { data: serviceData } = useGetServiceByIdQuery(serviceId!);
-
-  console.log('serviceData', serviceData);
-
   const dispatch = useAppDispatch();
-
   const { token } = useAppSelector((state) => state.user);
   // console.log(user);
 
@@ -39,8 +35,7 @@ const BookingPage = () => {
   if (token) {
     decodedToken = jwtDecode<DecodedToken>(token);
   }
-    console.log(decodedToken);
-    
+
 
   const {
     register,
@@ -50,37 +45,39 @@ const BookingPage = () => {
 
   const onSubmit = async () => {
     const bookingInfo = {
-      serviceId: serviceData?.data?._id,
-      slotId: slotId,
+      service: serviceData?.data?._id,
+      slot: slotId,
       customer: decodedToken?.userId, // Use the userId from decoded token
       token: token,
     };
+
+    console.log('bookingInfo', bookingInfo);
 
     try {
       const res = await createBooking(bookingInfo).unwrap();
       console.log(res);
       if (res.success) {
+        toast.success("Order successfully sumitted!",{
+          duration: 15000
+        }), res.message;
         window.location.href = res.data.paymentSession.payment_url;
-        
-       
-        dispatch(clearSlots());
 
+
+        dispatch(clearSlots());
         // Redirect to success page after payment
         // navigate("/success");
       } else {
-        console.error("Order creation failed:", res.message);
+        toast.error("Order creation failed:", res.message);
       }
-    } catch (error) {
-      console.log(error);
-      console.error("Payment failed:", error);
-      
-    
+    } catch (err: any) {
+      console.error("Error:", err);
+      toast.error(err.data?.message || "Unknown error occurred");
     }
   };
 
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-   
+
       {/* Left Side: Selected Service and Slots */}
       <div className="p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-4">{serviceData?.data?.name}</h2>
@@ -151,7 +148,7 @@ const BookingPage = () => {
           <div className="text-center">
             <Button
               type="submit"
-              >
+            >
               Pay Now
             </Button>
           </div>

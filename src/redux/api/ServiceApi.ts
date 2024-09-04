@@ -25,11 +25,20 @@ const authApi = baseApi.injectEndpoints({
       },
       providesTags: ["Service"],
     }),
+
+    getAllServices: builder.query({
+      query: () => ({
+        url: '/services',
+        method: "GET"
+      }),
+      providesTags: ['Service'],
+    }),
+
     getServiceById: builder.query({
       query: (id: string) => ({
         url: `/services/${id}`,
-        method: "GET",
-      }),
+          method: "GET",
+      })
     }),
     getSlotsByServiceId: builder.query({
       query: (id: string) => ({
@@ -37,23 +46,13 @@ const authApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-  
+
     getSingleSlotsById: builder.query({
-      query: (id: string | undefined) => {
-        if (!id) {
-          console.error("Service ID is undefined"); // Log an error if ID is undefined
-          return { url: '', method: 'GET' }; // Return an empty request or handle it as needed
-        }
-    
-        console.log("Service ID:", id); // Log the ID for debugging
-        return {
-          url: `/slots/availability/${id}`, // Correctly include the id in the URL
-          method: "GET",
-        };
-      },
+      query: (id: string) => ({
+        url: `/slots/availability/${id}`,
+        method: "GET",
+      }),
     }),
-    
-    
 
     createService: builder.mutation({
       query: ({ payload, token }) => {
@@ -83,6 +82,7 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["Service"],
     }),
+
     deleteService: builder.mutation({
       query: ({ id, token }) => ({
         url: `/services/${id}`,
@@ -98,6 +98,7 @@ const authApi = baseApi.injectEndpoints({
 
 export const {
   useGetServicesQuery,
+  useGetAllServicesQuery,
   useGetServiceByIdQuery,
   useGetSlotsByServiceIdQuery,
   useGetSingleSlotsByIdQuery,

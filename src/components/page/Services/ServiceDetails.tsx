@@ -10,20 +10,20 @@ import { Button } from "@/components/ui/button";
 
 const ServiceDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const [selectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isBooking, setIsBooking] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const selectedSlots = useAppSelector((state) => state.slot.selectedSlots);
 
   // Fetch service details
-  const { data: serviceData } = useGetServiceByIdQuery(id!);
-  const { _id, name, image, description, duration, price } = serviceData.data || {}; 
-  const { data: slotsData } = useGetSlotsByServiceIdQuery(_id || '');
+  const { data: serviceData, isLoading: serviceLoading, error: serviceError } = useGetServiceByIdQuery(id!);
+  const { _id, name, image, description, duration, price } = serviceData?.data || {};
+  const { data: slotsData, isLoading: slotsLoading, error: slotsError } = useGetSlotsByServiceIdQuery(_id || '');
 
   // Fetch User Data
-  const { user } = useAppSelector((state) => state.user);
-
+  const { user } = useAppSelector((state) => state.user); 
+  
   const handleSlotClick = (slot: string) => {
     if (selectedSlots.includes(slot)) {
       dispatch(deselectSlot(slot));
@@ -41,6 +41,20 @@ const ServiceDetails = () => {
     setIsBooking(true);
     navigate(`/booking/${_id}/${selectedSlots[0]}`);
   };
+
+  const getButtonClass = (slot: any) => {
+    if (selectedSlots.includes(slot._id)) return "bg-green-500 text-white shadow-lg";
+    if (slot.isBooked === "available") return "text-white bg-blue-500 hover:bg-blue-700";
+    return "bg-gray-300 text-gray-500 cursor-not-allowed";
+  };
+
+  if (serviceLoading || slotsLoading) {
+    return <p>Loading service details...</p>;
+  }
+
+  if (serviceError || slotsError) {
+    return <p>Error loading service or slots. Please try again later.</p>;
+  }
 
   return (
     <div className="container mx-auto">
@@ -71,6 +85,7 @@ const ServiceDetails = () => {
           <div className="shadow-md rounded-md">
             <Calendar
               value={selectedDate}
+              onChange={(value) => setSelectedDate(value as Date)}
               className="w-full text-center border-none rounded-md p-2"
               tileClassName={({ date }) =>
                 selectedDate.toDateString() === date.toDateString()
@@ -84,35 +99,29 @@ const ServiceDetails = () => {
         <div className="flex flex-col items-center pt-10 justify-top bg-gray-100 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">Available Slots</h2>
           <div className="grid grid-cols-2 gap-5">
-            {slotsData?.data?.map((slot: any) => (
-              <Button
-                key={slot._id}
-                onClick={() => handleSlotClick(slot._id)}
-                disabled={
-                  slot.isBooked === "booked" ||
-                  isBooking ||
-                  slot.isBooked === "cancelled"
-                }
-                className={`${selectedSlots.includes(slot._id)
-                    ? "bg-green-500 text-white shadow-lg"
-                    : slot.isBooked === "available"
-                      ? "text-white bg-blue-500 hover:bg-blue-700"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }`}
-              >
-                {slot.startTime} - {slot.endTime}
-              </Button>
-            ))}
+            {slotsData?.data?.length > 0 ? (
+              slotsData.data.map((slot: any) => (
+                <Button
+                  key={slot._id}
+                  onClick={() => handleSlotClick(slot._id)}
+                  disabled={slot.isBooked !== "available" || isBooking}
+                  className={getButtonClass(slot)}
+                >
+                  {slot.startTime} - {slot.endTime}
+                </Button>
+              ))
+            ) : (
+              <p>No available slots for the selected date.</p>
+            )}
           </div>
           {selectedSlots.length > 0 && (
             <div className="text-center mt-6">
               <Button
                 onClick={handleBooking}
-                className={`${isBooking ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                className={isBooking ? "opacity-50 cursor-not-allowed" : ""}
                 disabled={isBooking}
               >
-                Book This Service
+                {isBooking ? "Booking..." : "Book This Service"}
               </Button>
             </div>
           )}

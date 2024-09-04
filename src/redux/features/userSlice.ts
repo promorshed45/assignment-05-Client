@@ -4,6 +4,7 @@ const initialState = {
   token: "",
   user: {
     _id: "",
+    userId: "",
     name: "",
     email: "",
     image: "",
@@ -27,6 +28,7 @@ export const userSlice = createSlice({
       state.token = "";
       state.user = {
         _id: "",
+        userId: "",
         name: "",
         email: "",
         image: "",

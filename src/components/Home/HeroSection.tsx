@@ -14,7 +14,7 @@ const HeroSection = () => {
               <span className="text-yellow-500 mt-2 py-20"> In Chattagram </span>
             </h1>
             <p className="text-lg text-center md:text-xl"> This is the One stop servicing center.Here we are serving the modern and high technology services... </p>
-            <Link to='/'>
+            <Link to='/service'>
               <button className="my-8 inline-flex text-slate-950 cursor-pointer items-center text-base font-semibold white bg-yellow-500 px-5 py-3.5 rounded-md">
                 Book a service
               </button>

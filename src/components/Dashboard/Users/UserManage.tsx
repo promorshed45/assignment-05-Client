@@ -12,9 +12,8 @@ import { Card, CardContent } from "@/components/ui/card";
 const UserManage = () => {
     const { token } = useAppSelector((state) => state.user);
     const { data: users, isLoading, isError } = useGetAllUsersQuery(token);
-    const [updateUserRole] = useUpdateUserRoleMutation();
 
-    console.log('user list', users);
+    const [updateUserRole] = useUpdateUserRoleMutation();
 
     const handleRoleUpdate = async (userId: string, role: string) => {
         try {
@@ -69,12 +68,13 @@ const UserManage = () => {
                                                     <SelectTrigger className="w-[180px]">
                                                         <SelectValue placeholder="Select Role" />
                                                     </SelectTrigger>
-                                                    <SelectContent>
+                                                    <SelectContent className="flex mx-auto">
                                                         <SelectGroup>
                                                             <SelectItem value="admin">Admin</SelectItem>
                                                             <SelectItem value="user">User</SelectItem>
                                                         </SelectGroup>
                                                     </SelectContent>
+
                                                 </Select>
                                             </TableCell>
                                         </TableRow>

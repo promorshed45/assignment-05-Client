@@ -39,7 +39,7 @@ const DeleteService = ({ id }: { id: string }) => {
       toast.dismiss(toastId);
 
       modalCloseBtn.click();
-      toast.success("Product deleted successfully");
+      toast.success("Service deleted successfully");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error("Something went wrong");

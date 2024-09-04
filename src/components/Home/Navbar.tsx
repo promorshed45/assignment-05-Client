@@ -2,7 +2,6 @@ import { useState } from "react";
 import { LogIn, Menu, X } from "lucide-react";
 import logo from "../../../src/assets/logo.svg";
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +15,7 @@ const Navbar = () => {
       <div className="mx-auto flex  items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <div className="flex items-center">
-            <div className="h-14 w-26">
+            <div className="h-12 w-24">
               <Link to="/">
                 <img
                   alt="Elite Car Wash"
@@ -46,15 +45,15 @@ const Navbar = () => {
           <Link
             to='/login'
           >
-            <Button
-              className="bg-yellow-500 outline-none hover:bg-gray-100"
+            <button
+              className="bg-yellow-500 px-2.5 py-1.5 rounded-sm outline-none hover:bg-gray-100"
             >
-              <LogIn className="size-5 text-black" />
-            </Button>
+              <LogIn className="size-4 text-black" />
+            </button>
           </Link>
         </div>
         <div className="lg:hidden">
-          <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
+          <Menu onClick={toggleMenu} className="size-6 text-white cursor-pointer" />
         </div>
         {isMenuOpen && (
           <div className="absolute top-0 right-0 z-50 origin-top-right p-2 transform transition lg:hidden">
@@ -62,7 +61,7 @@ const Navbar = () => {
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2">
-                    <h1 className="font-bold text-xl">
+                    <h1 className="font-bold">
                       {" "}
                       Elite Car <span className="text-red-500">
                         {" "}
@@ -77,7 +76,7 @@ const Navbar = () => {
                       className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                     >
                       <span className="sr-only">Close menu</span>
-                      <X className="size-6 text-red-300" aria-hidden="true" />
+                      <X className="size-4 text-red-500" aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -97,9 +96,9 @@ const Navbar = () => {
                 <div className="ml-4 mt-2">
                   <Link to="/login">
                     <button
-                      type="button"
-                      className="rounded-md border border-gray-700 bg-gray-100 px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
-                      <LogIn className="size-5 text-gray-700" />
+                      className="bg-yellow-500 px-2.5 py-1.5 rounded-sm outline-none hover:bg-slate-500"
+                    >
+                      <LogIn className="size-4 text-white " />
                     </button>
                   </Link>
                 </div>
@@ -122,9 +121,5 @@ const menuItems = [
   {
     name: "Services",
     path: "/service",
-  },
-  {
-    name: "Booking",
-    path: "/booking",
-  },
+  }
 ];

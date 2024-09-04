@@ -8,11 +8,11 @@ const AdminOverview = () => {
   const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log('admin overview', user.role);
-//   if (isLoading) return <p>Loading...</p>;
-//   if (isError) return <p>Something went wrong. Please try again later.</p>;
 
-
+if (!user || user.role !== "admin") {
+  navigate("/");
+  return null;
+}
 
   return (
     <div className="container mx-auto p-6">

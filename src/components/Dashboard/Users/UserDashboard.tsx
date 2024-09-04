@@ -12,6 +12,8 @@ const UserDashboard = () => {
   const { user, token } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetBookingQuery(token);
+
+  console.log(user);
   console.log(data?.data);
 
   if (!user || user.role !== "user") {
@@ -65,7 +67,7 @@ const UserDashboard = () => {
               <strong>Email:</strong> {user.email}
             </p>
             <Button
-              onClick={() => navigate("/update-profile")}
+              onClick={() => navigate("/dashboard/update-profile")}
               className="mt-4"
             >
               Profile Info

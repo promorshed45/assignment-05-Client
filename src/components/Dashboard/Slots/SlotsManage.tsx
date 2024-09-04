@@ -1,20 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  useCreateSlotMutation,
-  useGetSlotsQuery,
-  useUpdateSlotMutation,
-} from "@/redux/features/slot/slotApi";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"; 
+import { useCreateSlotMutation, useGetSlotsQuery, useUpdateSlotMutation } from "@/redux/features/slot/slotApi";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -30,8 +20,9 @@ export enum SlotStatus {
   CANCELLED = "cancelled",
 }
 
+
 const SlotsManage = () => {
-  const { data: slots, refetch, is } = useGetSlotsQuery(undefined);
+  const { data: slots, isLoading, isError } = useGetSlotsQuery(undefined);
   const [updateSlot] = useUpdateSlotMutation();
   const [createSlot] = useCreateSlotMutation();
   const { data: services } = useGetServicesQuery("");
@@ -62,7 +53,6 @@ const SlotsManage = () => {
       await createSlot({ slotDetails, token }).unwrap();
       setIsModalOpen(false);
       toast.success("Slot created successfully.");
-      refetch();
     } catch (err: any) {
       console.error("Error:", err);
       toast.error(err.data?.message || "Unknown error occurred");
@@ -75,7 +65,6 @@ const SlotsManage = () => {
       try {
         await updateSlot({ id: slotId, isBooked: newStatus, token }).unwrap();
         toast.success("Slot Status Updated Successfully");
-        refetch();
       } catch (err: any) {
         console.error("Error:", err);
         toast.error(err.data?.message || "Unknown error occurred");
@@ -95,6 +84,9 @@ const SlotsManage = () => {
         return "";
     }
   };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Something went wrong. Please try again later.</p>;
 
   return (
     <div className="p-4">
@@ -118,11 +110,7 @@ const SlotsManage = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-4">
                   {/* Service Dropdown */}
-                  <Select
-                    {...register("service")}
-                    onValueChange={(value) => setValue("service", value)}
-                    required
-                  >
+                  <Select onValueChange={(value) => setValue("service", value)} required>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
@@ -190,37 +178,42 @@ const SlotsManage = () => {
                       <TableCell> {startTime} </TableCell>
                       <TableCell>{endTime}</TableCell>
 
-                      <TableCell
-
-                      >
+                      <TableCell>
                         <Button
-                          className={`px-3 py-1 text-center font-medium rounded-lg ${getStatusColor(isBooked)}`}>
-
+                          className={`px-3 py-1 text-center font-medium rounded-lg ${getStatusColor(isBooked)}`}
+                        >
                           {isBooked}
                         </Button>
                       </TableCell>
-
-                      <TableCell className="text-center px-4 py-2 space-x-2">
-                        <Button
-                          className="dark:bg-red-200 dark:text-slate-950"
-                          disabled={isBooked === SlotStatus.BOOKED}
-                          onClick={() =>
-                            handleUpdateSlotStatus(_id, SlotStatus.CANCELLED)
-                          }
-                        >
-                          Set Cancelled
-                        </Button>
-                        <Button
-                          className="dark:bg-green-200 dark:text-slate-950"
-                          disabled={isBooked === SlotStatus.BOOKED}
-                          onClick={() =>
-                            handleUpdateSlotStatus(slot._id, SlotStatus.AVAILABLE)
-                          }
-                        >
-                          Set Available
-                        </Button>
+                      <TableCell className="pl-8">
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() =>
+                              handleUpdateSlotStatus(_id, SlotStatus.AVAILABLE)
+                            }
+                          >
+                            Mark Available
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => handleUpdateSlotStatus(_id, SlotStatus.BOOKED)}
+                          >
+                            Mark Booked
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() =>
+                              handleUpdateSlotStatus(_id, SlotStatus.CANCELLED)
+                            }
+                          >
+                            Cancel
+                          </Button>
+                        </div>
                       </TableCell>
-
                     </TableRow>
                   );
                 })}

@@ -29,8 +29,9 @@ type TFormValues = {
 const AddService = () => {
   const [addService] = useCreateServiceMutation();
   const { token } = useAppSelector((state) => state.user);
-const { control, handleSubmit, formState: { errors }, reset } = useForm<TFormValues>({ 
-  defaultValues: { name: "", image: "", description: "", price: 0, duration: 0 } });
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<TFormValues>({
+    defaultValues: { name: "", image: "", description: "", price: 0, duration: 0 }
+  });
 
 
   const onSubmit = async (values: TFormValues) => {
@@ -41,10 +42,10 @@ const { control, handleSubmit, formState: { errors }, reset } = useForm<TFormVal
         ...values,
         price: Number(values.price),
         duration: Number(values.duration),
-        isDeleted: false, 
+        isDeleted: false,
       };
 
-      await addService({payload, token}).unwrap();
+      await addService({ payload, token }).unwrap();
 
       toast.dismiss(toastId);
       toast.success("Service added successfully!");

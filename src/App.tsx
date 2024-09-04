@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Navbar from "./components/Home/Navbar";
 import Footer from "./components/Home/Footer";
+import ScrollButton from "./components/ScrollButton";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Navbar />
       <Outlet />
       <Footer />
+      <ScrollButton/>
     </>
   );
 }

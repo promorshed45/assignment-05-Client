@@ -13,6 +13,7 @@ import SlotsManage from "@/components/Dashboard/Slots/SlotsManage";
 import UserManage from "@/components/Dashboard/Users/UserManage";
 import BookingList from "@/components/Dashboard/Users/BookingList";
 import BookingPage from "@/components/page/Booking";
+import UpdateProfile from "@/components/Dashboard/Users/UpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: 'booking-management', 
         element: <BookingList/>
+      },
+      {
+        path: 'update-profile', 
+        element: <UpdateProfile/>
       }
     ]
   }

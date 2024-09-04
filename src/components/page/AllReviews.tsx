@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useGetAllReviewsQuery } from '@/redux/features/auth/reviewApi';
 import StarRating from '../Home/Review/StartRating';
 
@@ -27,14 +27,14 @@ const AllReviews = () => {
         return (
           <div key={_id} className="flex flex-col mb-10 shadow-md py-5 px-4 border-0 border-gray-50 rounded-md">
             <div className="flex items-center gap-4 mb-2">
-              <Avatar className="w-12 h-12 shadow-lg">
-                <AvatarImage
-                  src={`https://api.dicebear.com/6.x/initials/svg?seed=${reviewName}`}
-                />
-                {/* <AvatarFallback>
-                  {reviewName[0]} 
-                </AvatarFallback> */}
-              </Avatar>
+                <Avatar className="w-12 h-12 shadow-lg">
+                  <AvatarImage
+                    src={`https://api.dicebear.com/6.x/initials/svg?seed=${reviewName}`}
+                  />
+                  <AvatarFallback>
+                  {reviewName?.trim() ? reviewName[0] : 'A'}
+                  </AvatarFallback>
+                </Avatar>
               <div className="space-y-1 w-full">
                 <div className="flex justify-between items-center">
                 <div className="font-bold">{reviewName}</div>

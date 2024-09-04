@@ -16,7 +16,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="z-50 flex h-screen overflow-hidden border-r border-gray-200 dark:border-gray-800">
+        <div className="z-50 flex h-screen overflow-hidden border-r border-gray-200 dark:border-gray-800 bg-slate-950">
             <aside
                 className={`transform ${isOpen ? "translate-x-0" : "-translate-x-full"
                     } fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto px-5 py-8 transition-transform duration-300 lg:static lg:translate-x-0`}

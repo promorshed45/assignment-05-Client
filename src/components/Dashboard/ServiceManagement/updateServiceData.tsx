@@ -2,7 +2,6 @@
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { IService } from "@/type/service";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm, Controller } from "react-hook-form";
@@ -12,14 +11,14 @@ import { useUpdateServiceMutation } from "@/redux/api/ServiceApi";
 import { useAppSelector } from "@/redux/hook";
 import { useNavigate } from "react-router";
 
-// type updateServiceProps = {
-//   _id: string;
-//   name: string;
-//   description: string;
-//   image: string;
-//   price: number;
-//   duration: number;
-// };
+type TValues = {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  duration: number;
+};
 
 const UpdateServiceData = ({ service }: any) => {
   const [updateService] = useUpdateServiceMutation();
@@ -28,6 +27,7 @@ const UpdateServiceData = ({ service }: any) => {
 
   const { control, handleSubmit, formState: { errors }, } = useForm<TValues>({
     defaultValues: {
+      _id: service._id || "",
       name: service.name || "",
       image: service.image || "",
       description: service.description || "",
@@ -44,11 +44,11 @@ const UpdateServiceData = ({ service }: any) => {
         duration: Number(updatedService.duration),
       };
 
-      await updateService({ id: _id.toString(), token, payload, }).unwrap();
+      await updateService({ id: updatedService._id.toString(), token, payload }).unwrap();
       toast.success("Service updated successfully!", {
         duration: 2000,
       });
-      navigate('/dashboard/service-management')
+      navigate('/dashboard/service-management');
     } catch (error) {
       console.error("Error updating service:", error);
       toast.error("Failed to update service.");

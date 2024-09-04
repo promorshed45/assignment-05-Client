@@ -1,10 +1,10 @@
 import { useGetAllReviewsQuery } from '@/redux/features/auth/reviewApi';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import StarRating from "./StartRating";
 
 type Review = {
   _id: string;
-  userId?: { name?: string }; 
+  userId: { name?: string }; 
   rating: number;
   reviewName: string | undefined;
   feedback: string;
@@ -13,7 +13,6 @@ type Review = {
 
 const Reviews = () => {
   const { data, isError, isLoading } = useGetAllReviewsQuery("");
-  
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Something went wrong. Please try again later.</p>;
 
@@ -31,9 +30,9 @@ const Reviews = () => {
                 <AvatarImage
                   src={`https://api.dicebear.com/6.x/initials/svg?seed=${reviewName}`}
                 />
-                {/* <AvatarFallback>
-                  {reviewName[0]} 
-                </AvatarFallback> */}
+                <AvatarFallback>
+                {reviewName?.trim() ? reviewName[0] : 'A'}
+                </AvatarFallback>
               </Avatar>
               <div className="space-y-1 w-full">
                 <div className="flex justify-between items-center">

@@ -10,7 +10,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const location = useLocation();
 
   // Check if the user is authenticated
-  if (user._id) {
+  if (user.userId) {
     return <>{children}</>;
   }
 

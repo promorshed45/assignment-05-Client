@@ -28,8 +28,6 @@ const Register = () => {
         const toastId = toast.loading("Please wait...");
         try {
             const data = await registerUser(userData).unwrap();
-            console.log("API Response:", data);
-
             const user = data.data;
 
             if (!user) {
@@ -116,7 +114,7 @@ const Register = () => {
                                         {...register('phone', {
                                             required: 'Phone number is required',
                                             pattern: {
-                                                value: /^\+?[1-9]\d{1,14}$/i,
+                                                value: /^\+?[0-9]\d{1,14}$/i,
                                                 message: 'Enter a valid phone number'
                                             }
                                         })}
