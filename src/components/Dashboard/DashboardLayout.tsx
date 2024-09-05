@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { ThemeProvider } from "../ui/ThemeProvider";
 import AdminOverview from "./Users/AdminOverview";
-import UserDashboard from "./Users/UserDashboard";
+import UserDashboard from "./Users/UserOverview";
 import { useAppSelector } from '@/redux/hook';
 
 const DashboardLayout = () => {

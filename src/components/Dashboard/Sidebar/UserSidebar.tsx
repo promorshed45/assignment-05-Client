@@ -1,7 +1,7 @@
 import { Newspaper, BellRing, Settings, LayoutDashboardIcon} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const UserMenu = () => {
+const UserSidebar = () => {
     return (
         <>
            <div className="mt-6 flex flex-1 flex-col justify-between">
@@ -47,4 +47,4 @@ const UserMenu = () => {
     );
 };
 
-export default UserMenu;
+export default UserSidebar;

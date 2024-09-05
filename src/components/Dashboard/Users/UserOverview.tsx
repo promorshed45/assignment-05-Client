@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppSelector } from "@/redux/hook";
 
-const UserDashboard = () => {
+const UserOverview = () => {
   const { user, token } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetBookingQuery(token);
@@ -164,4 +164,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default UserOverview;

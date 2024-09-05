@@ -1,7 +1,7 @@
 import { Calendar, CarTaxiFrontIcon, LayoutDashboardIcon, User2Icon, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const AdminMenu = () => {
+const AdminSidebar = () => {
     return (
         <>
             <div className="mt-6 flex flex-1 flex-col justify-between">
@@ -50,4 +50,4 @@ const AdminMenu = () => {
     );
 };
 
-export default AdminMenu;
+export default AdminSidebar;

@@ -3,8 +3,8 @@ import { Menu } from "lucide-react";
 import logo from "../../../src/assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/redux/hook";
-import AdminMenu from "./AdminDashboard/AdminMenu";
-import UserMenu from "./UserDashboard/UserMenu";
+import UserMenu from "./Sidebar/UserSidebar";
+import AdminMenu from "./Sidebar/AdminSidebar";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
