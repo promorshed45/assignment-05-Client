@@ -5,17 +5,17 @@ interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
-const AdminRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+const UserRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { user } = useAppSelector((state) => state.user);
   const location = useLocation();
 
   // Check if the user is authenticated and has the admin role
-  if (user.role === 'admin') {
+  if (user.role === 'user') {
     return <>{children}</>;
   }
 
   // If the user is not an admin, redirect to a "not authorized" page or dashboard
-  if (user && user.role !== 'admin') {
+  if (user && user.role !== 'user') {
     return <Navigate to="/login" replace />;
   }
 
@@ -23,4 +23,4 @@ const AdminRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   return <Navigate to="/login" state={{ from: location }} replace />;
 };
 
-export default AdminRoute;
+export default UserRoute;

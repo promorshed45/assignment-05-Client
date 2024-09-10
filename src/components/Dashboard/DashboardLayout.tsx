@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header";
 import { ThemeProvider } from "../ui/ThemeProvider";
 import AdminOverview from "./Users/AdminOverview";

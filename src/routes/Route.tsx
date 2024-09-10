@@ -14,12 +14,14 @@ import UserManage from "@/components/Dashboard/Users/UserManage";
 import BookingList from "@/components/Dashboard/Users/BookingList";
 import BookingPage from "@/components/page/Booking";
 import UpdateProfile from "@/components/Dashboard/Users/UpdateProfile";
+import UserRoute from "./UserRoute";
+import AdminRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <PageNotFound/>,
+    errorElement: <PageNotFound />,
     children: [
       {
         index: true,
@@ -28,32 +30,30 @@ const router = createBrowserRouter([
       {
         index: true,
         path: "/service",
-        element: <AllServices/>
+        element: <AllServices />
       },
       {
         index: true,
         path: "/services/:id",
-        element: <ServiceDetails/>
-      },
-      {
-        path: "/booking",
-        element: <></>
+        element: <ServiceDetails />
       },
       {
         path: "booking/:serviceId/:slotId",
-        element: <BookingPage />,
+        element: <UserRoute>
+          <BookingPage />,
+        </UserRoute>
       },
       {
         path: "/login",
-        element: <Login/>
+        element: <Login />
       },
       {
         path: "/register",
-        element: <Register/>
+        element: <Register />
       },
       {
         path: "/allreviews",
-        element: <AllReviews/>
+        element: <AllReviews />
       },
     ],
   },
@@ -62,29 +62,41 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        path: 'service-management', 
-        element: <ServiceManage />
+        path: 'service-management',
+        element: 
+          <AdminRoute>
+            <ServiceManage />
+          </AdminRoute>
+        
       },
       {
-        path: 'slots-management', 
-        element: <SlotsManage/>
+        path: 'slots-management',
+        element: <AdminRoute>
+          <SlotsManage />
+        </AdminRoute>
       },
 
       {
-        path: 'users-management', 
-        element: <UserManage/>
+        path: 'users-management',
+        element: <AdminRoute>
+          <UserManage />
+        </AdminRoute>
       },
       {
-        path: 'booking-management', 
-        element: <BookingList/>
+        path: 'booking-management',
+        element: <AdminRoute>
+          <BookingList />
+        </AdminRoute>
       },
       {
-        path: 'update-profile', 
-        element: <UpdateProfile/>
+        path: 'update-profile',
+        element: <UserRoute>
+          <UpdateProfile />
+        </UserRoute>
       }
     ]
   }
-  
+
 ]);
 
 export default router;

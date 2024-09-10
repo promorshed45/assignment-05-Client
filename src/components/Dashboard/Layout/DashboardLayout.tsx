@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import Sidebar from '../Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header';
 import { useAppSelector } from '@/redux/hook';
 import AdminOverview from '../Users/AdminOverview';

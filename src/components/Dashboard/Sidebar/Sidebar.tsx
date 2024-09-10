@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import logo from "../../../src/assets/logo.svg";
+import logo from "../../../../src/assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/redux/hook";
-import UserMenu from "./Sidebar/UserSidebar";
-import AdminMenu from "./Sidebar/AdminSidebar";
+import AdminSidebar from "./AdminSidebar";
+import UserSidebar from "./UserSidebar";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,7 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                {role === "admin" ? <AdminMenu /> : <UserMenu />}
+                {role === "admin" ? <AdminSidebar/> : <UserSidebar />}
             </aside>
             <div className="relative flex-1 bg-white p-8 sm:p-0">
                 <button
