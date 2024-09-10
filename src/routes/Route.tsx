@@ -15,7 +15,7 @@ import BookingList from "@/components/Dashboard/Users/BookingList";
 import BookingPage from "@/components/page/Booking";
 import UpdateProfile from "@/components/Dashboard/Users/UpdateProfile";
 import UserRoute from "./UserRoute";
-import AdminRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
