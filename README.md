@@ -43,17 +43,6 @@ Node.js (version 14 or higher)
 npm or yarn for package management
 MongoDB for database management (local or cloud)
 
-📥 Installation Guide
-Step-by-Step Setup
-Clone the Repository:
-
-bash
-Copy code
-git clone https://github.com/NurMuhammadCSE/car-wash-booking-system.git
-cd car-wash-booking-system
-npm install
-
-
 
 🎬 How to Use
 Explore Services: Start by browsing through the available car wash services.
